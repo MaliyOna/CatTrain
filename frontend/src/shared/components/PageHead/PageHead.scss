@@ -1,0 +1,17 @@
+.pageHead {
+  height: 50px;
+
+  background-color: #161616;
+  //box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+}
+
+.pageHead__text {
+  display: flex;
+
+  width: 100%;
+  color: #FFFFFF;
+  font-size: 30px;
+  font-weight: 600;
+
+  justify-content: center;
+}

@@ -1,0 +1,38 @@
+.registrationPage__elements__content {
+    width: 512px;
+    height: 512px;
+    border: 3px solid #161616;
+    padding: auto;
+    border-radius: 3px;
+}
+
+.registrationPage__elements {
+    width: 100%;
+    justify-content: center;
+    display: flex;
+
+    margin-top: 10vh;
+}
+
+.registrationPage__elements__content__block {
+    width: 469px;
+    height: 415px;
+    background-color: #161616;
+    margin: auto;
+    margin-bottom: 18px;
+    border-radius: 3px;
+
+    .input{
+        margin-left: 27px;
+        margin-right: 27px;
+        padding-top: 20px;
+    }
+}
+
+.registrationPage__elements__content__text{
+    font-size: 30px;
+    font-weight: 600;
+    margin-left: 18px;
+    margin-top: 20px;
+    margin-bottom: 16px;
+}

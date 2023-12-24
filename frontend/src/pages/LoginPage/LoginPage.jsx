@@ -12,10 +12,6 @@ export function LoginPage() {
     const [repeatPassword, setRepeatPassword] = useState("");
     const navigate = useNavigate();
 
-    useEffect(() => {
-        
-    }, [])
-
     async function loginUserClick(){
         const user = {
             userName: login,
@@ -24,6 +20,10 @@ export function LoginPage() {
 
         const data = await loginUser(user);
         console.log(data);
+
+        if (data.status === 200) {
+            navigate(`/mainpage`);
+        }
     }
 
     async function handleNavigateToRegistration() {
@@ -32,14 +32,14 @@ export function LoginPage() {
     }
 
     return (
-        <div className='registrationPage'>
+        <div className='loginPage'>
             <PageHead></PageHead>
 
-            <div className='registrationPage__elements'>
-                <div className='registrationPage__elements__content'>
-                    <div className='registrationPage__elements__content__text'>Регистрация</div>
+            <div className='loginPage__elements'>
+                <div className='loginPage__elements__content'>
+                    <div className='loginPage__elements__content__text'>Вход</div>
 
-                    <div className='registrationPage__elements__content__block'>
+                    <div className='loginPage__elements__content__block'>
                         <Input
                             label="Логин"
                             type="text"
@@ -56,12 +56,12 @@ export function LoginPage() {
                             name="newPassword"
                             rules={{ required: "Required field" }} />
 
-                        <div className='registrationPage__elements__content__block__button'>
-                            <div className='registrationPage__button__complete'>
+                        <div className='loginPage__elements__content__block__button'>
+                            <div className='loginPage__button__complete'>
                                 <Button onClick={() => handleNavigateToRegistration()} value='Регистрация'/>
                             </div>
 
-                            <div className='registrationPage__button__login'>
+                            <div className='loginPage__button__login'>
                                 <Button onClick={() => loginUserClick()} value='Вход'/>
                             </div>
                         </div>

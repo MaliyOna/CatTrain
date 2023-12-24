@@ -1,10 +1,12 @@
 import React from 'react';
 import './PageContent.scss';
 
-export function PageContent() {
+export function PageContent(props) {
   return (
     <div className='pageContent'>
-        CatTrain
+        {
+        props.children
+        }
     </div>
   );
 }

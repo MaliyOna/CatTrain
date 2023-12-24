@@ -1,4 +1,4 @@
-.registrationPage__elements__content {
+.loginPage__elements__content {
     width: 512px;
     height: 412px;
     border: 3px solid #161616;
@@ -6,7 +6,7 @@
     border-radius: 3px;
 }
 
-.registrationPage__elements {
+.loginPage__elements {
     width: 100%;
     justify-content: center;
     display: flex;
@@ -14,7 +14,7 @@
     margin-top: 10vh;
 }
 
-.registrationPage__elements__content__block {
+.loginPage__elements__content__block {
     width: 469px;
     height: 315px;
     background-color: #161616;
@@ -29,7 +29,7 @@
     }
 }
 
-.registrationPage__elements__content__block__button{
+.loginPage__elements__content__block__button{
     display: flex;
     justify-content: center;
     padding-top: 40px;
@@ -39,11 +39,11 @@
     }
 }
 
-.registrationPage__button__complete {
+.loginPage__button__complete {
     margin-right: 5px;
 }
 
-.registrationPage__elements__content__text{
+.loginPage__elements__content__text{
     font-size: 30px;
     font-weight: 600;
     margin-left: 18px;

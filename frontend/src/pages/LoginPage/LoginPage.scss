@@ -1,6 +1,6 @@
 .registrationPage__elements__content {
     width: 512px;
-    height: 512px;
+    height: 412px;
     border: 3px solid #161616;
     padding: auto;
     border-radius: 3px;
@@ -16,7 +16,7 @@
 
 .registrationPage__elements__content__block {
     width: 469px;
-    height: 415px;
+    height: 315px;
     background-color: #161616;
     margin: auto;
     margin-bottom: 18px;
@@ -33,6 +33,10 @@
     display: flex;
     justify-content: center;
     padding-top: 40px;
+
+    .button  {
+        width: 200px;
+    }
 }
 
 .registrationPage__button__complete {

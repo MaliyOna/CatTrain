@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { RegistrationPage } from './pages/RegistrationPage/RegistrationPage';
+import { LoginPage } from './pages/LoginPage/LoginPage';
 
 export class App extends React.Component {
   render() {
@@ -10,6 +11,7 @@ export class App extends React.Component {
           <BrowserRouter>
             <Routes>
               <Route path="/registration" element={<RegistrationPage />} />
+              <Route path="/login" element={<LoginPage />} />
               <Route
                 path="*"
                 element={<Navigate to="/registration" />}

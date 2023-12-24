@@ -1,3 +1,4 @@
+import { setToken } from "../helpers/token";
 import {api} from "./api";
 
 export async function createUser(user) {
@@ -7,5 +8,6 @@ export async function createUser(user) {
 
 export async function loginUser(user) {
     const response = await api.post(`/auth/login`, user);
-    return response
+    await setToken(response.data.token)
+    return response;
 }

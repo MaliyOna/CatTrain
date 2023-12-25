@@ -8,7 +8,7 @@ import { Button } from '../../shared/components/Button/Button';
 import { PopupWindow } from '../../shared/components/PopupWindow/PopupWindow';
 import { Dropdown } from '../../shared/components/Dropdown/Dropdown';
 import { createCourse, getAllCourses } from '../../shared/api/courseApi';
-import { Block } from '../../shared/components/Block/Block';
+import { BlockCourse } from '../../shared/components/BlockCourse/BlockCourse';
 
 export function CoursesPage() {
     const [findTitle, setFindTitle] = useState("");
@@ -69,7 +69,7 @@ export function CoursesPage() {
                     <div className='coursesPage__filter'>2</div>
                     <div className='coursesPage__result'>
                         {courses && courses.map(x => 
-                            <Block key={x._id} type="course" title={x.title} level={x.level} progLanguage={x.progLanguage}/>
+                            <BlockCourse key={x._id} _id={x._id} title={x.title} level={x.level} progLanguage={x.progLanguage}/>
                         )}
                     </div>
                 </div>

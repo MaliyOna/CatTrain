@@ -1,0 +1,23 @@
+.createCoursePage {
+    display: flex;
+    flex-direction: column;
+}
+
+.createCoursePage__title__name, .createCoursePage__description__name {
+    font-size: 1.5vw;
+    width: 15%;
+}
+
+.createCoursePage__title__input{
+    width: 45%;
+}
+
+.createCoursePage {
+    margin-top: 1.5%;
+    margin-left: 2%;
+}
+
+.createCoursePage__title {
+    display: flex;
+    flex-direction: row;
+}

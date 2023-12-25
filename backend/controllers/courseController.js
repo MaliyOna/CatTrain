@@ -36,6 +36,18 @@ class courseController {
             return res.status(400).json({ message: "Course error" })
         }
     }
+
+    async getCourseById(req, res) {
+        try {
+            const courseId = req.params.courseId;
+
+            const course = await Course.findById(courseId);
+            res.json(course);
+        } catch (error) {
+            console.log(error);
+            return res.status(400).json({ message: "Course error" })
+        }
+    }
 }
 
 module.exports = courseController;

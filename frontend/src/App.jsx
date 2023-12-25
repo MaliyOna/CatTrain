@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { RegistrationPage } from './pages/RegistrationPage/RegistrationPage';
 import { LoginPage } from './pages/LoginPage/LoginPage';
 import { MainPage } from './pages/MainPage/MainPage';
-import { CreateCoursePage } from './pages/CreateCoursePage/CreateCoursePage';
+import { CreateUpdateCoursePage } from './pages/CreateUpdateCoursePage/CreateUpdateCoursePage';
 import { CoursesPage } from './pages/CoursesPage/CoursesPage';
 
 export class App extends React.Component {
@@ -16,8 +16,8 @@ export class App extends React.Component {
               <Route path="/registration" element={<RegistrationPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path='/mainpage' element={<MainPage/>} />
-              <Route path='/createcourse' element={<CreateCoursePage/>} />
               <Route path='/courses' element={<CoursesPage/>} />
+              <Route path='/courses/:courseId' element={<CreateUpdateCoursePage/>} />
               <Route
                 path="*"
                 element={<Navigate to="/registration" />}

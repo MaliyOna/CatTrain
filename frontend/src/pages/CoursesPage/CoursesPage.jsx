@@ -7,7 +7,8 @@ import { Input } from '../../shared/components/Input/Input';
 import { Button } from '../../shared/components/Button/Button';
 import { PopupWindow } from '../../shared/components/PopupWindow/PopupWindow';
 import { Dropdown } from '../../shared/components/Dropdown/Dropdown';
-import { createCourse } from '../../shared/api/courseApi';
+import { createCourse, getAllCourses } from '../../shared/api/courseApi';
+import { Block } from '../../shared/components/Block/Block';
 
 export function CoursesPage() {
     const [findTitle, setFindTitle] = useState("");
@@ -17,6 +18,12 @@ export function CoursesPage() {
     const [progLanguage, setProgLanguage] = useState(progLanguages[0].value);
     const [newTitle, setNewTitle] = useState("");
 
+    const [courses, setCourses] = useState([]);
+
+    useEffect(() => {
+        loadGetAllCourses();
+    }, [])
+
     function findByName() {
 
     }
@@ -25,8 +32,15 @@ export function CoursesPage() {
         setProgLanguage(value);
     }
 
+    const loadGetAllCourses = async() => {
+        const data = await getAllCourses();
+        console.log(data.data);
+        setCourses(data.data);
+    }
+
     const createCourseClick = async() => {
         await createCourse(newTitle, progLanguage);
+        loadGetAllCourses();
         setShowCreateCourse(false);
     }
 
@@ -53,7 +67,11 @@ export function CoursesPage() {
                         </div>
                     </div>
                     <div className='coursesPage__filter'>2</div>
-                    <div className='coursesPage__result'>3</div>
+                    <div className='coursesPage__result'>
+                        {courses && courses.map(x => 
+                            <Block key={x._id} type="course" title={x.title} level={x.level} progLanguage={x.progLanguage}/>
+                        )}
+                    </div>
                 </div>
             </PageContent>
 

@@ -3,12 +3,16 @@
 		font-size: 28px;
 }
 
+.input__border{
+  border: 2px solid #16161650 !important;
+}
+
 .input_input[type="text"], .input_input[type="password"], .input_input[type="email"], .input_input[type="number"] {
     border-radius: 3px;
     background-color: #d3d3d37c;
     outline: none;
-    color: #212121;
-    font-size: 16px;
+    color: #5e5e5e;
+    font-size: 20px;
     line-height: 24px;
     text-align: left;
     padding: 7px;

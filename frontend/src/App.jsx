@@ -2,6 +2,9 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { RegistrationPage } from './pages/RegistrationPage/RegistrationPage';
 import { LoginPage } from './pages/LoginPage/LoginPage';
+import { MainPage } from './pages/MainPage/MainPage';
+import { CreateCoursePage } from './pages/CreateCoursePage/CreateCoursePage';
+import { CoursesPage } from './pages/CoursesPage/CoursesPage';
 
 export class App extends React.Component {
   render() {
@@ -12,6 +15,9 @@ export class App extends React.Component {
             <Routes>
               <Route path="/registration" element={<RegistrationPage />} />
               <Route path="/login" element={<LoginPage />} />
+              <Route path='/mainpage' element={<MainPage/>} />
+              <Route path='/createcourse' element={<CreateCoursePage/>} />
+              <Route path='/courses' element={<CoursesPage/>} />
               <Route
                 path="*"
                 element={<Navigate to="/registration" />}

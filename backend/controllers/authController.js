@@ -16,6 +16,7 @@ const generateAccessToken = (id, roles) => {
 
 class authController {
     async registration(req, res) {
+        console.log(req);
         try {
             const errors = validationResult(req)
 
@@ -41,7 +42,7 @@ class authController {
 
             await user.save();
 
-            return res.json({message: "Пользователь успешно зарешистрирован"});
+            return res.json({message: "Пользователь успешно зарегистрирован"});
         } catch (error) {
             console.log(error);
             return res.status(400).json({message: "Registration error"})

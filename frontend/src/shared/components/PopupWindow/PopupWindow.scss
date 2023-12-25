@@ -1,0 +1,32 @@
+.popupWindow__overlay{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(60, 60, 60, 0.73);
+    z-index: 10;
+  
+    .popupWindow {
+      border-radius: 3px;
+      box-shadow: 0 2px 11px 0 rgba(0,0,0,0.16);
+      background-color: #fff;
+      padding: 24px;
+  
+      .popupWindow__title{
+        font-size: 32px;
+        line-height: 29px;
+        font-weight: 600;
+        color: #484848;
+        margin: 0 30px 24px 6px;
+      }
+  
+      .button{
+        margin-right: 12px;
+      }
+    }
+  }
+  

@@ -1,10 +1,9 @@
-const {Schema, model} = require('mongoose');
+const {Schema, Types, model} = require('mongoose');
 
 const Course = new Schema({
     title: {type: String, required: true},
     description: {type: String, required: true},
     level: {type: String, required: true},
-    language: {type: String, required: true},
     progLanguage: {type: String, required: true},
     topics: [{ type: Types.ObjectId, ref: 'Topic' }],
     users: [{ type: Types.ObjectId, ref: 'User' }]

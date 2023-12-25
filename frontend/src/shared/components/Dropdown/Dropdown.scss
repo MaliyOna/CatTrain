@@ -1,0 +1,32 @@
+.dropdown{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  
+    .dropdown_select {
+      padding: 7px;
+      font-size: 16px;
+      border-radius: 3px;
+      outline: none;
+      color: #212121;
+      min-width: 160px;
+    }
+    
+    .dropdown_label {
+      color: #4A4A4A;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 26px;
+      margin-left: 7px;
+    }
+    
+    .dropdown__error {
+      color: #CF200C;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    
+    .dropdown_select_error{
+      background-color: #f1c8c3 !important;
+    }
+  }

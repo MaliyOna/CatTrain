@@ -1,0 +1,40 @@
+.coursesPage {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5vw 2vw;
+}
+
+.coursesPage__find {
+    display: flex;
+    flex-direction: row;
+}
+
+.coursesPage__find__input {
+    width: 130vw;
+    margin-right: 1vw;
+}
+
+.coursesPage__find__buttonFind, .coursesPage__find__buttonCreate {
+    width: 25vw;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.coursesPage__popupWindow__input {
+    .input_label{
+        color: black;
+    }
+}
+
+.coursesPage__popupWindow__dropdown {
+    margin-top: 1vw;
+    margin-bottom: 1vw;
+
+    .dropdown_label{
+        font-size: 2vw !important;
+        font-weight: 400 !important;
+        color: black !important;
+        margin-left: 0 !important;
+        margin-bottom: 0.5vw;
+    }
+}

@@ -26,16 +26,3 @@ const start = async () => {
 }
 
 start();
-
-// app.use(express.json());
-// app.use("/auth", authRouter);
-
-// app.listen(PORT, () => {
-//     console.log(`Server starting on port ${PORT}`)
-// })
-
-// app.get('/api', (req, res) => {
-//     res.json({
-//         message: "Hello from backend"
-//     });
-// });

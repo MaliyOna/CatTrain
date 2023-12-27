@@ -12,10 +12,6 @@ export function RegistrationPage() {
     const [repeatPassword, setRepeatPassword] = useState("");
     const navigate = useNavigate();
 
-    useEffect(() => {
-        
-    }, [])
-
     async function createUserClick(){
         const user = {
             userName: login,

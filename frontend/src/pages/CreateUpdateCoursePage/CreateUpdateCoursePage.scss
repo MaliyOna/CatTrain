@@ -15,9 +15,15 @@
 .createCoursePage {
     margin-top: 1.5%;
     margin-left: 2%;
+    margin-right: 2%;
 }
 
 .createCoursePage__title {
     display: flex;
     flex-direction: row;
+}
+
+.createCoursePage__level {
+    margin-top: 2%;
+    font-size: 10vw !important;
 }

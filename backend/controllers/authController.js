@@ -16,7 +16,6 @@ const generateAccessToken = (id, roles) => {
 
 class authController {
     async registration(req, res) {
-        console.log(req);
         try {
             const errors = validationResult(req)
 

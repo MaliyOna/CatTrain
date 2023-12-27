@@ -14,7 +14,7 @@ class courseController {
 
             const course = new Course({
                 title: title,
-                description: "default",
+                description: "{\"blocks\":[{\"key\":\"636a5\",\"text\":\"default\",\"type\":\"unstyled\",\"depth\":0,\"inlineStyleRanges\":[],\"entityRanges\":[],\"data\":{}}],\"entityMap\":{}}",
                 level: "Начальный",
                 progLanguage: progLanguage
             });
@@ -46,6 +46,49 @@ class courseController {
         } catch (error) {
             console.log(error);
             return res.status(400).json({ message: "Course error" })
+        }
+    }
+
+    async updateDescriptionById(req, res) {
+        try {
+            const courseId = req.params.courseId;
+            const description = req.body.description;
+
+            await Course.findOneAndUpdate({_id: courseId}, {description: description});
+
+            return res.status(200).json({ message: 'Description updated successfully' });
+        } catch (error) {
+            console.log(error);
+            return res.status(400).json({ message: "Update description error" })
+        }
+    }
+
+    async updateLevelById(req, res) {
+        try {
+            const courseId = req.params.courseId;
+            const level = req.body.level;
+
+            await Course.findOneAndUpdate({_id: courseId}, {level: level});
+            return res.status(200).json({ message: 'Level updated successfully' });
+        } catch (error) {
+            console.log(error);
+            return res.status(400).json({ message: "Update level error" })
+        }
+    }
+
+    async updateLanguageById(req, res) {
+        try {
+            const courseId = req.params.courseId;
+            const progLanguage = req.body.language;
+            console.log(progLanguage);
+            console.log(courseId);
+
+            const result = await Course.findOneAndUpdate({_id: courseId}, {progLanguage: progLanguage});
+            console.log(result);
+            return res.status(200).json({ message: 'Language updated successfully' });
+        } catch (error) {
+            console.log(error);
+            return res.status(400).json({ message: "Language level error" })
         }
     }
 }

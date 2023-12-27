@@ -13,8 +13,9 @@ router.post('/',
 ], controller.createCourse);
 
 router.get('/', controller.getAllCourse);
-
-//router.post('/login', controller.login);
-//router.get('/users', authMiddleware, controller.getUsers);
+router.get('/:courseId', controller.getCourseById);
+router.put('/:courseId/description', controller.updateDescriptionById);
+router.put('/:courseId/level', controller.updateLevelById);
+router.put('/:courseId/language', controller.updateLanguageById)
 
 module.exports = router;

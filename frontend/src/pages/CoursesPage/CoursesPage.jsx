@@ -69,7 +69,7 @@ export function CoursesPage() {
                     <div className='coursesPage__filter'>2</div>
                     <div className='coursesPage__result'>
                         {courses && courses.map(x => 
-                            <BlockCourse key={x._id} _id={x._id} title={x.title} level={x.level} progLanguage={x.progLanguage}/>
+                            <BlockCourse key={x._id} navigate={`/courses/${x._id}`} title={x.title} level={x.level} progLanguage={x.progLanguage}/>
                         )}
                     </div>
                 </div>

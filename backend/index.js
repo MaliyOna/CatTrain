@@ -1,7 +1,8 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const authRouter = require('./authRouter')
-const courseRouter = require('./courseRouter')
+const authRouter = require('./Routers/authRouter')
+const courseRouter = require('./Routers/courseRouter')
+const topicRouter = require('./Routers/topicRouter')
 var cors = require('cors')
 
 const PORT = process.env.PORT || 3001
@@ -11,7 +12,8 @@ const app = express();
 app.use(cors())
 app.use(express.json());
 app.use("/auth", authRouter);
-app.use("/courses", courseRouter)
+app.use("/courses", courseRouter);
+app.use("/topics", topicRouter);
 
 const start = async () => {
     try {

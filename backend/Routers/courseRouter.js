@@ -1,8 +1,8 @@
 const Router = require('express');
 const router = new Router();
-const courseController = require('./controllers/courseController');
+const courseController = require('../controllers/courseController');
 const {check} = require('express-validator');
-const authMiddleware = require('./middlewares/authMiddleware')
+const authMiddleware = require('../middlewares/authMiddleware')
 
 const controller = new courseController();
 
@@ -16,6 +16,7 @@ router.get('/', controller.getAllCourse);
 router.get('/:courseId', controller.getCourseById);
 router.put('/:courseId/description', controller.updateDescriptionById);
 router.put('/:courseId/level', controller.updateLevelById);
-router.put('/:courseId/language', controller.updateLanguageById)
+router.put('/:courseId/language', controller.updateLanguageById);
+router.post('/:courseId/newtopic', controller.addNewTopic);
 
 module.exports = router;

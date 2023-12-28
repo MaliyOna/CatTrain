@@ -1,0 +1,33 @@
+.createTopicPage {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5vw 1vw;
+}
+
+.createTopicPage__title {
+    display: flex;
+    flex-direction: row;
+}
+
+.createTopicPage__title__name {
+    font-size: 1.5vw;
+    width: 15%;
+}
+
+.createTopicPage__title__input {
+    width: 45%;
+}
+
+.createTopicPage__examples__button, .createTopicPage__exercises__button {
+    .button-normal {
+        width: 25vw !important
+    }
+}
+
+.createTopicPage__examples {
+    margin-top: 1%;
+}
+
+.createTopicPage__examples__name, .createTopicPage__description__name, .createTopicPage__exercises__name {
+    font-size: 1.5vw;
+}

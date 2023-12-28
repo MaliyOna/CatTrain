@@ -9,7 +9,7 @@ import './RadioGroup.scss';
 export default function RadioButtonsGroup(props) {
   return (
     <FormControl>
-      <FormLabel id="demo-radio-buttons-group-label">Уровень знаний</FormLabel>
+      <FormLabel id="demo-radio-buttons-group-label">{props.text}</FormLabel>
       <RadioGroup
         aria-labelledby="skill-level "
         value={props.value}
@@ -19,9 +19,6 @@ export default function RadioButtonsGroup(props) {
           <FormControlLabel key={index} value={element} control={<Radio />} label={element} />
         )
         }
-        {/* <FormControlLabel value="Начальный" control={<Radio />} label="Начальный" />
-         <FormControlLabel value="Средний" control={<Radio />} label="Средний" />
-        <FormControlLabel value="Продвинутый" control={<Radio />} label="Продвинутый" /> */}
       </RadioGroup>
     </FormControl>
   );

@@ -3,12 +3,13 @@
     flex-direction: column;
 }
 
-.createCoursePage__title__name, .createCoursePage__description__name {
+.createCoursePage__title__name,
+.createCoursePage__description__name {
     font-size: 1.5vw;
     width: 15%;
 }
 
-.createCoursePage__title__input{
+.createCoursePage__title__input {
     width: 45%;
 }
 
@@ -23,7 +24,21 @@
     flex-direction: row;
 }
 
-.createCoursePage__level {
+.createCoursePage__level, .createCoursePage__language {
     margin-top: 2%;
     font-size: 10vw !important;
+}
+
+.createCoursePage__buttonCreate {
+    .button-normal {
+        width: 25vw !important
+    }
+}
+
+.coursesPage__popupWindow__button {
+    margin-top: 1vw;
+}
+
+.createCoursePage__buttonCreate {
+    margin-bottom: 1vw;
 }

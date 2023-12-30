@@ -79,10 +79,23 @@ class topicController {
             const topicId = req.params.topicId;
             const title = req.body.title;
 
+            const rightCodeHTML = new Code({language:"HTML", code:"<! -- RightHTML -->"});
+            const rightCodeCSS = new Code({language: "CSS", code: "/* RightCSS */"});
+            const codeHTML = new Code({language:"HTML", code:"<! -- HTML -->"});
+            const codeCSS = new Code({language: "CSS", code: "/* CSS */"});
+
+            await rightCodeHTML.save();
+            await rightCodeCSS.save();
+            await codeHTML.save();
+            await codeCSS.save();
+
             const exercise = new Exercise({
                 title: title,
                 description: "{\"blocks\":[{\"key\":\"636a5\",\"text\":\"default\",\"type\":\"unstyled\",\"depth\":0,\"inlineStyleRanges\":[],\"entityRanges\":[],\"data\":{}}],\"entityMap\":{}}",
-                rightCodes: null
+                rightCodeHTML: rightCodeHTML,
+                rightCodeCSS: rightCodeCSS,
+                startCodeHTML: codeHTML,
+                startCodeCSS: codeCSS
             });
 
             await exercise.save();

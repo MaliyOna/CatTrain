@@ -7,6 +7,7 @@ import { CreateUpdateCoursePage } from './pages/CreateUpdateCoursePage/CreateUpd
 import { CoursesPage } from './pages/CoursesPage/CoursesPage';
 import { CreateUpdateTopicPage } from './pages/CreateUpdateTopicPage/CreateUpdateTopicPage';
 import { CreateUpdateExamplePage } from './pages/CreateUpdateExamplePage/CreateUpdateExamplePage';
+import { CreateUpdateExercisePage } from './pages/CreateUpdateExercisePage/CreateUpdateExercisePage';
 
 export class App extends React.Component {
   render() {
@@ -22,6 +23,7 @@ export class App extends React.Component {
               <Route path='/courses/:courseId' element={<CreateUpdateCoursePage/>} />
               <Route path='/courses/:courseId/topic/:topicId' element={<CreateUpdateTopicPage/>} />
               <Route path='/courses/:courseId/topic/:topicId/example/:exampleId' element={<CreateUpdateExamplePage/>} />
+              <Route path='/courses/:courseId/topic/:topicId/exercise/:exerciseId' element={<CreateUpdateExercisePage/>} />
               <Route
                 path="*"
                 element={<Navigate to="/registration" />}

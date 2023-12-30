@@ -5,6 +5,7 @@ const courseRouter = require('./Routers/courseRouter')
 const topicRouter = require('./Routers/topicRouter')
 const exampleRouter = require('./Routers/exampleRouter')
 const codeRouter = require('./Routers/codeRouter');
+const exerciseRouter = require('./Routers/exerciseRouter');
 var cors = require('cors')
 
 const PORT = process.env.PORT || 3001
@@ -18,6 +19,7 @@ app.use("/courses", courseRouter);
 app.use("/topics", topicRouter);
 app.use("/examples", exampleRouter);
 app.use("/codes", codeRouter);
+app.use("/exercises", exerciseRouter);
 
 const start = async () => {
     try {

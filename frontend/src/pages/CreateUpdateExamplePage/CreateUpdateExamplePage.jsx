@@ -15,7 +15,6 @@ import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/themes/prism.css';
 import { CodeEditor } from '../../shared/components/CodeEditor/CodeEditor';
-import { Button } from '../../shared/components/Button/Button';
 import { updateExampleCode } from '../../shared/api/codeApi';
 
 export function CreateUpdateExamplePage() {

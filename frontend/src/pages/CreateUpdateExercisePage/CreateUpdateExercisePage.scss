@@ -1,0 +1,43 @@
+.createExercisePage {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5vw 1vw;
+}
+
+.createExercisePage__title__name,
+.createExercisePage__description__name {
+    font-size: 1.5vw;
+    width: 15%;
+}
+
+.createExercisePage__title {
+    display: flex;
+    flex-direction: row;
+}
+
+.createExercisePage__title__name {
+    font-size: 1.5vw;
+    width: 15%;
+}
+
+.createExercisePage__title__input {
+    width: 45%;
+}
+
+.createExercisePage__code__html__editor,
+.createExercisePage__code__css__editor,
+.createExercisePage__code__block {
+    border: 2px solid #777777 !important;
+    border-radius: 3px;
+    padding-right: 5px;
+}
+
+.createExercisePage__code__block {
+    margin-top: 1vw;
+    border: 1px solid #777777 !important;
+}
+
+.createExercisePage__code__buttonHTML,
+.createExercisePage__code__buttonCSS {
+   margin-top: 1vw; 
+}

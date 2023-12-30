@@ -26,7 +26,7 @@ export function CreateUpdateTopicPage() {
 
     useEffect(() => {
         loadTopicInformation();
-    }, [])  //exercises, examples
+    }, [])
 
     async function loadTopicInformation() {
         const data = await getTopicById(params.topicId);

@@ -1,3 +1,4 @@
+const Code = require('../models/Code');
 const Example = require('../models/Example');
 const Exercise = require('../models/Exercise');
 const Topic = require('../models/Topic');
@@ -47,10 +48,17 @@ class topicController {
             const topicId = req.params.topicId;
             const title = req.body.title;
 
+            const codeHTML = new Code({language:"HTML", code:"<! -- HTML -->"});
+            const codeCSS = new Code({language: "CSS", code: "/* CSS */"});
+            
+            await codeHTML.save();
+            await codeCSS.save();
+
             const example = new Example({
                 title: title,
                 description: "{\"blocks\":[{\"key\":\"636a5\",\"text\":\"default\",\"type\":\"unstyled\",\"depth\":0,\"inlineStyleRanges\":[],\"entityRanges\":[],\"data\":{}}],\"entityMap\":{}}",
-                codes: []
+                codeHTML: codeHTML,
+                codeCSS:codeCSS
             })
 
             await example.save();

@@ -1,0 +1,43 @@
+.createExamplePage {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5vw 1vw;
+}
+
+.createExamplePage__title__name,
+.createExamplePage__description__name {
+    font-size: 1.5vw;
+    width: 15%;
+}
+
+.createExamplePage__title {
+    display: flex;
+    flex-direction: row;
+}
+
+.createExamplePage__title__name {
+    font-size: 1.5vw;
+    width: 15%;
+}
+
+.createExamplePage__title__input {
+    width: 45%;
+}
+
+.createExamplePage__code__html__editor,
+.createExamplePage__code__css__editor,
+.createExamplePage__code__block {
+    border: 2px solid #777777 !important;
+    border-radius: 3px;
+    padding-right: 5px;
+}
+
+.createExamplePage__code__block {
+    margin-top: 1vw;
+    border: 1px solid #777777 !important;
+}
+
+.createExamplePage__code__buttonHTML,
+.createExamplePage__code__buttonCSS {
+   margin-top: 1vw; 
+}

@@ -81,11 +81,8 @@ class courseController {
         try {
             const courseId = req.params.courseId;
             const progLanguage = req.body.language;
-            console.log(progLanguage);
-            console.log(courseId);
 
-            const result = await Course.findOneAndUpdate({ _id: courseId }, { progLanguage: progLanguage });
-            console.log(result);
+            await Course.findOneAndUpdate({ _id: courseId }, { progLanguage: progLanguage });
             return res.status(200).json({ message: 'Language updated successfully' });
         } catch (error) {
             console.log(error);
@@ -97,8 +94,6 @@ class courseController {
         try {
             const courseId = req.params.courseId;
             const topicTitle = req.body.title;
-
-            console.log(1);
 
             const topic = new Topic({
                 title: topicTitle,

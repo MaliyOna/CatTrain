@@ -10,6 +10,7 @@ import { CreateUpdateExamplePage } from './pages/CreateUpdateExamplePage/CreateU
 import { CreateUpdateExercisePage } from './pages/CreateUpdateExercisePage/CreateUpdateExercisePage';
 import { CoursesPage } from './pages/CoursesPage/CoursesPage';
 import { CoursePage } from './pages/CoursePage/CoursePage';
+import { TopicPage } from './pages/TopicPage/TopicPage';
 
 export class App extends React.Component {
   render() {
@@ -28,6 +29,7 @@ export class App extends React.Component {
               <Route path='/factorycourses/:courseId/topic/:topicId/exercise/:exerciseId' element={<CreateUpdateExercisePage/>} />
               <Route path='/courses' element={<CoursesPage/>} />
               <Route path='/courses/:courseId' element={<CoursePage/>} />
+              <Route path='/courses/:courseId/topics/:topicId' element={<TopicPage/>} />
               <Route
                 path="*"
                 element={<Navigate to="/registration" />}

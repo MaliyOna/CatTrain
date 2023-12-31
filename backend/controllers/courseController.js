@@ -2,6 +2,8 @@ const Course = require('../models/Course');
 const Topic = require('../models/Topic');
 const { validationResult } = require('express-validator');
 const User = require('../models/User');
+const { Types } = require('mongoose');
+const UserTopics = require('../models/UserTopics');
 
 class courseController {
     async createCourse(req, res) {
@@ -120,16 +122,59 @@ class courseController {
         try {
             const courseId = req.params.courseId;
             const userName = req.body.userName;
-            
+
             await User.findOneAndUpdate(
                 { userName },
                 { $addToSet: { courses: courseId } },
                 { new: true }
             );
-            res.status(200);
+            return res.status(200);
         } catch (error) {
             console.log(error);
             return res.status(400).json({ message: "Check or add connection course error" });
+        }
+    }
+
+    async checkOrAddConnectionTopic(req, res) {
+        try {
+            const courseId = req.params.courseId;
+            const topicId = req.params.topicId;
+            const userName = req.body.userName;
+
+            const user = await User.findOne({userName}).populate('userTopics');
+
+            const topicExists = user.userTopics.some(userTopic => userTopic.topic.equals(topicId));
+
+            if (!topicExists) {
+                const userTopic = new UserTopics({
+                    topic: topicId,
+                    courseId: courseId,
+                    completedExercises: []
+                })
+
+                await userTopic.save();
+
+                user.userTopics.push(userTopic);
+                user.save();
+            }
+
+            // await User.findOneAndUpdate(
+            //     { userName, 'userTopics.topic': { $ne: Types.ObjectId(topicId) } },
+            //     {
+            //         $push: {
+            //             userTopics: {
+            //                 topic: Types.ObjectId(topicId),
+            //                 courseId: Types.ObjectId(courseId)
+            //             }
+            //         }
+            //     },
+            //     { new: true }
+            // );
+            
+            return res.status(200);
+        } catch (error) {
+            console.log(error);
+            return res.status(400).json({ message: "Check or add connection topic error" });
         }
     }
 }

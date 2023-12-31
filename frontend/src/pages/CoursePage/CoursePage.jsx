@@ -19,11 +19,6 @@ export function CoursePage() {
     const [editorDescription, setEditorDescription] = useState(null);
     const params = useParams();
 
-    const levels = ["Начальный", "Средний", "Продвинутый"]
-    const language = ["HTML", "CSS"]
-
-
-
     useEffect(() => {
         loadCourseInformation();
         checkConnection();
@@ -76,7 +71,7 @@ export function CoursePage() {
 
                         <div className='topics'>
                             { topics.map(topic =>
-                                <Block key={topic._id} navigate={`/courses/${params.courseId}/topic/${topic._id}`} title={topic.title} />
+                                <Block key={topic._id} navigate={`/courses/${params.courseId}/topics/${topic._id}`} title={topic.title} />
                             )}
                         </div>
                     </div>

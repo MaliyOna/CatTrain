@@ -19,5 +19,6 @@ router.put('/:courseId/level', controller.updateLevelById);
 router.put('/:courseId/language', controller.updateLanguageById);
 router.post('/:courseId/newtopic', controller.addNewTopic);
 router.post('/:courseId/usercourses', controller.checkOrAddConnectionCourse);
+router.post('/:courseId/topic/:topicId', controller.checkOrAddConnectionTopic);
 
 module.exports = router;

@@ -33,3 +33,7 @@ export async function addNewTopicToCourse(courseId, title) {
 export async function checkOrAddConnectionCourse(courseId, userName) {
     await api.post(`/courses/${courseId}/usercourses`, {userName: userName});
 }
+
+export async function checkOrAddConnectionTopic(courseId, topicId, userName) {
+    await api.post(`/courses/${courseId}/topic/${topicId}`, {userName: userName});
+}

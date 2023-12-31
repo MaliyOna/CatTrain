@@ -4,6 +4,7 @@ const { validationResult } = require('express-validator');
 const User = require('../models/User');
 const { Types } = require('mongoose');
 const UserTopics = require('../models/UserTopics');
+const Exercise = require('../models/Exercise');
 
 class courseController {
     async createCourse(req, res) {
@@ -141,7 +142,7 @@ class courseController {
             const topicId = req.params.topicId;
             const userName = req.body.userName;
 
-            const user = await User.findOne({userName}).populate('userTopics');
+            const user = await User.findOne({ userName }).populate('userTopics');
 
             const topicExists = user.userTopics.some(userTopic => userTopic.topic.equals(topicId));
 
@@ -157,24 +158,35 @@ class courseController {
                 user.userTopics.push(userTopic);
                 user.save();
             }
-
-            // await User.findOneAndUpdate(
-            //     { userName, 'userTopics.topic': { $ne: Types.ObjectId(topicId) } },
-            //     {
-            //         $push: {
-            //             userTopics: {
-            //                 topic: Types.ObjectId(topicId),
-            //                 courseId: Types.ObjectId(courseId)
-            //             }
-            //         }
-            //     },
-            //     { new: true }
-            // );
-            
             return res.status(200);
         } catch (error) {
             console.log(error);
             return res.status(400).json({ message: "Check or add connection topic error" });
+        }
+    }
+
+    async addExerciseToUserTopic(req, res) {
+        try {
+            const exerciseId = req.params.exerciseId;
+            const topicId = req.params.topicId;
+            const userName = req.body.userName;
+
+            const user = await User.findOne({userName}).populate('userTopics');
+
+            const exerciseExists = user.userTopics.some(userTopic => userTopic.completedExercises.includes(exerciseId));
+
+            if (!exerciseExists) {
+                const userTopic = await UserTopics.findOne({ topic: topicId });
+
+                userTopic.completedExercises.push(exerciseId);
+                userTopic.save();
+            }
+
+            return res.status(200);
+
+        } catch (error) {
+            console.log(error);
+            return res.status(400).json({ message: "Add exercise to userTopic error" });
         }
     }
 }

@@ -69,7 +69,7 @@ export function FactoryCoursesPage() {
                     <div className='factoryCoursesPage__filter'>2</div>
                     <div className='factoryCoursesPage__result'>
                         {courses && courses.map(x => 
-                            <BlockCourse key={x._id} navigate={`/courses/${x._id}`} title={x.title} level={x.level} progLanguage={x.progLanguage}/>
+                            <BlockCourse key={x._id} navigate={`/factorycourses/${x._id}`} title={x.title} level={x.level} progLanguage={x.progLanguage}/>
                         )}
                     </div>
                 </div>

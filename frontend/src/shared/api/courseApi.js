@@ -37,3 +37,7 @@ export async function checkOrAddConnectionCourse(courseId, userName) {
 export async function checkOrAddConnectionTopic(courseId, topicId, userName) {
     await api.post(`/courses/${courseId}/topic/${topicId}`, {userName: userName});
 }
+
+export async function addExerciseToUserTopic(topicId, userName, exerciseId) {
+    await api.put(`/courses/topic/${topicId}/exercise/${exerciseId}`, {userName: userName})
+}

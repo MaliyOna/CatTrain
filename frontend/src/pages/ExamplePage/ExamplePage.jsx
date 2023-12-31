@@ -5,8 +5,6 @@ import { PageContent } from '../../shared/components/PageContent/PageContent';
 import { Menu } from '../../shared/components/Menu/Menu';
 import { getExampleById, updateExampleDescription } from '../../shared/api/exampleApi';
 import { useParams } from 'react-router-dom';
-import { Input } from '../../shared/components/Input/Input';
-import { updateExampleTitle } from '../../shared/api/exampleApi';
 import { convertToRaw, convertFromRaw, EditorState } from 'draft-js';
 import { EditorBlock } from '../../shared/components/EditorBlock/EditorBlock';
 import SimpleCodeEditor from 'react-simple-code-editor';
@@ -14,7 +12,6 @@ import { highlight, languages } from 'prismjs';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/themes/prism.css';
-import { CodeEditor } from '../../shared/components/CodeEditor/CodeEditor';
 import { updateExampleCode } from '../../shared/api/codeApi';
 import { SyntaxHighlighterLanguage } from '../../shared/components/SyntaxHighlighterLanguage/SyntaxHighlighterLanguage';
 import { FrameContent } from '../../shared/components/FrameContent/FrameContent';
@@ -55,6 +52,7 @@ export function ExamplePage() {
             setEditorStateDescription(EditorState.createEmpty());
         }
     }
+
 
     return (
         <>

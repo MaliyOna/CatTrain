@@ -66,7 +66,7 @@ export function CoursesPage() {
                             <Button onClick={() => setShowCreateCourse(true)} value='Создать' />
                         </div>
                     </div>
-                    <div className='coursesPage__filter'>2</div>
+                    <div className='coursesPage__filter'>Фильтр</div>
                     <div className='coursesPage__result'>
                         {courses && courses.map(x => 
                             <BlockCourse key={x._id} navigate={`/courses/${x._id}`} title={x.title} level={x.level} progLanguage={x.progLanguage}/>

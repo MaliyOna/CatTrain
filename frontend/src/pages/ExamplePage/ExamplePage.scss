@@ -1,0 +1,14 @@
+.examplePage {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5vw 1vw;
+}
+
+.examplePage__title {
+    font-size: 2vw;
+}
+
+.examplePage__description__name {
+    margin-top: 1vw;
+    font-size: 1.5vw;
+}

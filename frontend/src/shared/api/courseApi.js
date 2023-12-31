@@ -29,3 +29,7 @@ export async function updateCourseLanguage(courseId, language) {
 export async function addNewTopicToCourse(courseId, title) {
     await api.post(`/courses/${courseId}/newtopic`, {title: title})
 }
+
+export async function checkOrAddConnectionCourse(courseId, userName) {
+    await api.post(`/courses/${courseId}/usercourses`, {userName: userName});
+}

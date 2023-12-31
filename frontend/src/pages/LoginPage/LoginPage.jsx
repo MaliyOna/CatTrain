@@ -22,12 +22,12 @@ export function LoginPage() {
         console.log(data);
 
         if (data.status === 200) {
+            localStorage.setItem("userName", login);
             navigate(`/mainpage`);
         }
     }
 
     async function handleNavigateToRegistration() {
-        console.log(1)
         navigate(`/registration`);
     }
 

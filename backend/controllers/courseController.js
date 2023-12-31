@@ -1,6 +1,7 @@
 const Course = require('../models/Course');
 const Topic = require('../models/Topic');
-const { validationResult } = require('express-validator')
+const { validationResult } = require('express-validator');
+const User = require('../models/User');
 
 class courseController {
     async createCourse(req, res) {
@@ -101,7 +102,7 @@ class courseController {
                 examples: [],
                 exercises: []
             });
-            
+
             await topic.save();
 
             const course = await Course.findById(courseId);
@@ -112,6 +113,23 @@ class courseController {
         } catch (error) {
             console.log(error);
             return res.status(400).json({ message: "Topic error" });
+        }
+    }
+
+    async checkOrAddConnectionCourse(req, res) {
+        try {
+            const courseId = req.params.courseId;
+            const userName = req.body.userName;
+            
+            await User.findOneAndUpdate(
+                { userName },
+                { $addToSet: { courses: courseId } },
+                { new: true }
+            );
+            res.status(200);
+        } catch (error) {
+            console.log(error);
+            return res.status(400).json({ message: "Check or add connection course error" });
         }
     }
 }

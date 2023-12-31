@@ -128,7 +128,7 @@ export function CreateUpdateCoursePage() {
                     <div className='createCoursePage__topics'>
                         {topics && topics.map(topic =>
                             <div createCoursePage__topics__block>
-                                <Block key={topic._id} navigate={`/courses/${params.courseId}/topic/${topic._id}`} title={topic.title} />
+                                <Block key={topic._id} navigate={`/factorycourses/${params.courseId}/topic/${topic._id}`} title={topic.title} />
                             </div>
                         )}
                     </div>

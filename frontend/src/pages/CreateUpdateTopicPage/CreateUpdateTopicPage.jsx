@@ -115,7 +115,7 @@ export function CreateUpdateTopicPage() {
                             <div>
                                 {examples.map(example =>
                                     <div className='createTopicPage__examples__example'>
-                                        <Block key={example._id} title={example.title} navigate={`/courses/${params.courseId}/topic/${topic._id}/example/${example._id}`}/>
+                                        <Block key={example._id} title={example.title} navigate={`/factorycourses/${params.courseId}/topic/${topic._id}/example/${example._id}`}/>
                                     </div>
                                 )}
                             </div>
@@ -132,7 +132,7 @@ export function CreateUpdateTopicPage() {
                             <div>
                                 {exercises.map(exercise => 
                                     <div className='createTopicPage__exercises__exercise'>
-                                        <Block key={exercise._id} title={exercise.title} navigate={`/courses/${params.courseId}/topic/${topic._id}/exercise/${exercise._id}`}/>
+                                        <Block key={exercise._id} title={exercise.title} navigate={`/factorycourses/${params.courseId}/topic/${topic._id}/exercise/${exercise._id}`}/>
                                     </div>   
                                 )}
                             </div>

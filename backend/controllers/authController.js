@@ -36,7 +36,8 @@ class authController {
             const user = new User({
                 userName: userName,
                 password: hash,
-                roles: [userRole.value]
+                roles: [userRole.value],
+                userTopics: []
             })
 
             await user.save();

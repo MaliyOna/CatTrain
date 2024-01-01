@@ -1,3 +1,41 @@
+@media (max-width: 480px) {
+    .loginPage__elements__content{
+        width: 300px !important;
+        height: 370px !important;
+    }
+
+    .loginPage__elements__content__block {
+        width: 300px !important;
+        height: 274px !important;
+        background-color: #161616;
+        margin: auto;
+        margin-bottom: 0 !important;
+        border-radius: 3px;
+    
+        .input{
+            margin-left: 5px !important;
+            margin-right: 5px !important;
+            padding-top: 5px !important;
+        }
+    }
+
+    .loginPage__elements__content__block__button{
+        display: flex;
+        flex-direction: column;
+        padding-top: 15px !important;
+    
+        .button  {
+            width: 100% !important;
+        }
+    }
+    
+    .loginPage__button__complete {
+        margin-right: 0 !important;
+        margin-bottom: 5px;
+    }
+}
+
+
 .loginPage__elements__content {
     width: 512px;
     height: 412px;

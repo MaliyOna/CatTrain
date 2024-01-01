@@ -5,26 +5,37 @@ import { Input } from '../../shared/components/Input/Input';
 import { Button } from '../../shared/components/Button/Button';
 import { loginUser } from '../../shared/api/authApi';
 import { useNavigate } from 'react-router-dom';
+import { Loader } from '../../shared/components/Loader/Loader';
+import toast from 'react-hot-toast';
 
 export function LoginPage() {
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
-    const [repeatPassword, setRepeatPassword] = useState("");
+    const [isLoaded, setIsLoader] = useState(false);
     const navigate = useNavigate();
 
-    async function loginUserClick(){
-        const user = {
-            userName: login,
-            password: password
+    async function loginUserClick() {
+        try {
+            setIsLoader(true);
+
+            const user = {
+                userName: login,
+                password: password
+            }
+
+            const data = await loginUser(user);
+
+            if (data.status === 200) {
+                localStorage.setItem("userName", login);
+                navigate(`/mainpage`);
+            }
+        } catch (error) {
+            toast.error("Не верное имя пользователя или пароль");
+        }
+        finally {
+            setIsLoader(false);
         }
 
-        const data = await loginUser(user);
-        console.log(data);
-
-        if (data.status === 200) {
-            localStorage.setItem("userName", login);
-            navigate(`/mainpage`);
-        }
     }
 
     async function handleNavigateToRegistration() {
@@ -58,16 +69,18 @@ export function LoginPage() {
 
                         <div className='loginPage__elements__content__block__button'>
                             <div className='loginPage__button__complete'>
-                                <Button onClick={() => handleNavigateToRegistration()} value='Регистрация'/>
+                                <Button onClick={() => handleNavigateToRegistration()} value='Регистрация' />
                             </div>
 
                             <div className='loginPage__button__login'>
-                                <Button onClick={() => loginUserClick()} value='Вход'/>
+                                <Button onClick={() => loginUserClick()} value='Вход' />
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <Loader show={isLoaded} />
         </div>
     );
 }

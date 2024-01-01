@@ -67,7 +67,7 @@ export function FactoryCoursesPage() {
             setIsLoader(true);
 
             await createCourse(newTitle, progLanguage, englishTitle);
-            loadGetAllCourses();
+            await loadGetAllCourses();
             setShowCreateCourse(false);
         } catch (error) {
             toast.error("Ошибка сервера");

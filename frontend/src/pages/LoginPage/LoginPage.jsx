@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './LoginPage.scss';
 import { PageHead } from '../../shared/components/PageHead/PageHead';
 import { Input } from '../../shared/components/Input/Input';
@@ -15,27 +15,36 @@ export function LoginPage() {
     const navigate = useNavigate();
 
     async function loginUserClick() {
-        try {
-            setIsLoader(true);
+        setIsLoader(true);
 
-            const user = {
-                userName: login,
-                password: password
-            }
-
-            const data = await loginUser(user);
-
-            if (data.status === 200) {
-                localStorage.setItem("userName", login);
-                navigate(`/mainpage`);
-            }
-        } catch (error) {
-            toast.error("Не верное имя пользователя или пароль");
-        }
-        finally {
+        if (login === "" || login === " ") {
+            toast.error("Логин не должен быть пустым");
             setIsLoader(false);
         }
-
+        else if (password === "" || password === " ") {
+            toast.error("Пароль не должен быть пустым");
+            setIsLoader(false);
+        }
+        else{
+            try {
+                const user = {
+                    userName: login,
+                    password: password
+                }
+    
+                const data = await loginUser(user);
+    
+                if (data.status === 200) {
+                    localStorage.setItem("userName", login);
+                    navigate(`/mainpage`);
+                }
+            } catch (error) {
+                toast.error("Не верное имя пользователя или пароль");
+            }
+            finally {
+                setIsLoader(false);
+            }
+        }
     }
 
     async function handleNavigateToRegistration() {

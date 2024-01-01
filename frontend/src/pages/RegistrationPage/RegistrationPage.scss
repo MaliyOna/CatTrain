@@ -1,3 +1,36 @@
+@media (max-width: 480px) {
+    .registrationPage__elements__content {
+        width: 300px !important;
+        height: 450px !important;
+    } 
+
+    .registrationPage__elements__content__block {
+        width: 300px !important;
+        height: 365px !important;
+
+        .input{
+            margin-left: 5px !important;
+            margin-right: 5px !important;
+            padding-top: 5px !important;
+        }
+    }
+
+    .registrationPage__elements__content__block__button{
+        display: flex;
+        flex-direction: column;
+        padding-top: 15px !important;
+    
+        .button  {
+            width: 100% !important;
+        }
+    }
+    
+    .registrationPage__button__complete {
+        margin-right: 0 !important;
+        margin-bottom: 5px;
+    }
+}
+
 .registrationPage__elements__content {
     width: 512px;
     height: 512px;

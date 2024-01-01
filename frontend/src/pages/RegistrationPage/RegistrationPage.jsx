@@ -5,25 +5,47 @@ import { Input } from '../../shared/components/Input/Input';
 import { Button } from '../../shared/components/Button/Button';
 import { createUser } from '../../shared/api/authApi';
 import { useNavigate } from 'react-router-dom';
+import { Loader } from '../../shared/components/Loader/Loader';
+import toast from 'react-hot-toast';
 
 export function RegistrationPage() {
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
     const [repeatPassword, setRepeatPassword] = useState("");
+    const [isLoaded, setIsLoader] = useState(false);
     const navigate = useNavigate();
 
     async function createUserClick(){
-        const user = {
-            userName: login,
-            password: password
+        setIsLoader(true);
+        if (password !== repeatPassword) {
+            toast.error("Не верно повторен пароль");
+            setIsLoader(false);
+        } else if (login === "" || login === " ") {
+            toast.error("Логин не должен быть пустым");
+            setIsLoader(false);
+        } else if (password === "" || password === " ") {
+            toast.error("Пароль не должен быть пустым");
+            setIsLoader(false);
         }
-
-        const data = await createUser(user);
-        console.log(data);
+        else {
+            try {
+                const user = {
+                    userName: login,
+                    password: password
+                }
+        
+                await createUser(user);
+            } catch (error) {
+                toast.error("Пользователь с таким именем уже существует");
+            }
+            finally{
+                setIsLoader(false);
+            }
+            
+        }
     }
 
     async function handleNavigateToLogin() {
-        console.log(1)
         navigate(`/login`);
     }
 
@@ -72,6 +94,7 @@ export function RegistrationPage() {
                     </div>
                 </div>
             </div>
+            <Loader show={isLoaded} />
         </div>
     );
 }

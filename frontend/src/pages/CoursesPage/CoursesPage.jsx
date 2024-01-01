@@ -13,7 +13,7 @@ import { BlockCourse } from '../../shared/components/BlockCourse/BlockCourse';
 export function CoursesPage() {
     const [findTitle, setFindTitle] = useState("");
     const [showCreateCourse, setShowCreateCourse] = useState(false);
-    const progLanguages = [{ value: "html" }, { value: "css" }, { value: "javaScript" }];
+    const progLanguages = [{ value: "html" }, { value: "css" }];
 
     const [progLanguage, setProgLanguage] = useState(progLanguages[0].value);
     const [newTitle, setNewTitle] = useState("");
@@ -34,7 +34,6 @@ export function CoursesPage() {
 
     const loadGetAllCourses = async() => {
         const data = await getAllCourses();
-        console.log(data.data);
         setCourses(data.data);
     }
 

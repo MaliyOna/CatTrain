@@ -9,39 +9,72 @@ import { PopupWindow } from '../../shared/components/PopupWindow/PopupWindow';
 import { Dropdown } from '../../shared/components/Dropdown/Dropdown';
 import { createCourse, getAllCourses } from '../../shared/api/courseApi';
 import { BlockCourse } from '../../shared/components/BlockCourse/BlockCourse';
+import { Loader } from '../../shared/components/Loader/Loader';
+import toast from 'react-hot-toast';
 
 export function FactoryCoursesPage() {
     const [findTitle, setFindTitle] = useState("");
     const [showCreateCourse, setShowCreateCourse] = useState(false);
-    const progLanguages = [{ value: "html" }, { value: "css" }, { value: "javaScript" }];
+    const progLanguages = [{ value: "html" }, { value: "css" }];
 
     const [progLanguage, setProgLanguage] = useState(progLanguages[0].value);
     const [newTitle, setNewTitle] = useState("");
+    const [englishTitle, setEnglishTitle] = useState("");
+    const [isLoaded, setIsLoader] = useState(false);
 
     const [courses, setCourses] = useState([]);
+    const [filterCourses, setFilterCourses] = useState([]);
 
     useEffect(() => {
         loadGetAllCourses();
     }, [])
 
     function findByName() {
+        setIsLoader(true);
 
+        const searchTerm = findTitle.toLowerCase();
+
+        const filteredCourses = courses.filter(course =>
+          course.title.toLowerCase().includes(searchTerm)
+        );
+      
+        setFilterCourses(filteredCourses);
+        setIsLoader(false);
     }
 
     function handleLanguageSelected(value) {
         setProgLanguage(value);
     }
 
-    const loadGetAllCourses = async() => {
-        const data = await getAllCourses();
-        console.log(data.data);
-        setCourses(data.data);
+    async function loadGetAllCourses() {
+        try {
+            setIsLoader(true);
+
+            const data = await getAllCourses();
+            setCourses(data.data);
+            setFilterCourses(data.data);
+        } catch (error) {
+            toast.error("Ошибка сервера");
+        }
+        finally {
+            setIsLoader(false);
+        }
+
     }
 
-    const createCourseClick = async() => {
-        await createCourse(newTitle, progLanguage);
-        loadGetAllCourses();
-        setShowCreateCourse(false);
+    async function createCourseClick() {
+        try {
+            setIsLoader(true);
+
+            await createCourse(newTitle, progLanguage, englishTitle);
+            loadGetAllCourses();
+            setShowCreateCourse(false);
+        } catch (error) {
+            toast.error("Ошибка сервера");
+        }
+        finally {
+            setIsLoader(false);
+        }
     }
 
     return (
@@ -66,10 +99,9 @@ export function FactoryCoursesPage() {
                             <Button onClick={() => setShowCreateCourse(true)} value='Создать' />
                         </div>
                     </div>
-                    <div className='factoryCoursesPage__filter'>2</div>
                     <div className='factoryCoursesPage__result'>
-                        {courses && courses.map(x => 
-                            <BlockCourse key={x._id} navigate={`/factorycourses/${x._id}`} title={x.title} level={x.level} progLanguage={x.progLanguage}/>
+                        {filterCourses && filterCourses.map(x =>
+                            <BlockCourse key={x._id} navigate={`/factorycourses/${x._id}`} title={x.title} level={x.level} progLanguage={x.progLanguage} />
                         )}
                     </div>
                 </div>
@@ -83,20 +115,32 @@ export function FactoryCoursesPage() {
                         border="border"
                         value={newTitle}
                         onChange={(event) => setNewTitle(event.target.value)}
-                        name="newLogin" />
+                        name="title" />
+                </div>
+
+                <div className='factoryCoursesPage__popupWindow__input__eng'>
+                    <Input
+                        label="Введите название курса на английском"
+                        type="text"
+                        border="border"
+                        value={englishTitle}
+                        onChange={(event) => setEnglishTitle(event.target.value)}
+                        name="englishTitle" />
                 </div>
 
                 <div className='factoryCoursesPage__popupWindow__dropdown'>
-                <Dropdown
-                    options={progLanguages.map(x => ({ value: x.value, text: x.value }))}
-                    onSelected={handleLanguageSelected}
-                    value={progLanguage}
-                    label="Выберите язык" />
+                    <Dropdown
+                        options={progLanguages.map(x => ({ value: x.value, text: x.value }))}
+                        onSelected={handleLanguageSelected}
+                        value={progLanguage}
+                        label="Выберите язык" />
                 </div>
 
                 <Button onClick={() => createCourseClick(false)} value='Создать' />
                 <Button onClick={() => setShowCreateCourse(false)} color='red' value='Отмена' />
             </PopupWindow>
+
+            <Loader show={isLoaded} />
         </>
     );
 }

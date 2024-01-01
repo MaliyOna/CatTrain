@@ -1,3 +1,15 @@
+@media (max-width: 480px) {
+    .block__course{
+        font-size: 12px !important;
+    }
+}
+
+@media (max-width: 880px) {
+    .block__course{
+        font-size: 14px !important;
+    }
+}
+
 .block__course {
     display: flex;
     flex-direction: column;

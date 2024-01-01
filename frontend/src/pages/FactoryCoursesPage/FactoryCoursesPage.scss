@@ -1,3 +1,36 @@
+@media (max-width: 480px) {
+    .factoryCoursesPage {
+        .input_input{
+            font-size: 15px;
+            line-height: 0 !important;
+        }
+
+        .button-normal {
+            margin-top: 6px;
+            height: 30px;
+            width: 80px;
+            font-size: 15px;
+
+            border-left: 1px solid #161616;
+            border-right: 1px solid #161616;
+        }
+    }
+}
+
+@media (max-width: 690px) {
+    .factoryCoursesPage {
+        .button-normal {
+            margin-top: 6px;
+            height: 30px;
+            width: 80px;
+            font-size: 15px;
+
+            border-left: 1px solid #161616;
+            border-right: 1px solid #161616;
+        }
+    }
+}
+
 .factoryCoursesPage {
     display: flex;
     flex-direction: column;
@@ -20,7 +53,7 @@
     margin-bottom: auto;
 }
 
-.factoryCoursesPage__popupWindow__input {
+.factoryCoursesPage__popupWindow__input, .factoryCoursesPage__popupWindow__input__eng {
     .input_label{
         color: black;
     }

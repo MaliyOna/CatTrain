@@ -15,7 +15,7 @@ class courseController {
                 return res.status(400).json({ message: "Ошибка при создании", errors })
             }
 
-            const { title, progLanguage } = req.body;
+            const { title, progLanguage, englishTitle} = req.body;
 
             const course = new Course({
                 title: title,

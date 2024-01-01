@@ -1,7 +1,7 @@
 import {api} from "./api";
 
-export async function createCourse(courseName, progLanguage) {
-    await api.post(`/courses`, { title: courseName, progLanguage: progLanguage});
+export async function createCourse(courseName, progLanguage, englishTitle) {
+    await api.post(`/courses`, { title: courseName, progLanguage: progLanguage, englishTitle: englishTitle});
 }
 
 export async function getAllCourses() {

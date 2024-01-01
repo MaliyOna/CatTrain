@@ -1,3 +1,9 @@
+@media (max-width: 480px) {
+    .block {
+        font-size: 12px !important;
+    }
+}
+
 .block {
     display: flex;
     flex-direction: column;

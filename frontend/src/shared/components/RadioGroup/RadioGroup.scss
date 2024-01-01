@@ -1,13 +1,28 @@
-.css-ahj2mt-MuiTypography-root {
-  font-size: 1.5vw !important;
-}
-
 .css-u4tvz2-MuiFormLabel-root, .css-u4tvz2-MuiFormLabel-root.Mui-focused {
-  font-size: 1.7vw !important;
   font-weight: 400 !important;
   color: black !important;
 }
 
 .css-vqmohf-MuiButtonBase-root-MuiRadio-root.Mui-checked {
   color: #161616 !important;
+}
+
+@media (max-width: 480px) {
+  .css-ahj2mt-MuiTypography-root {
+    font-size: 12px !important
+  }
+
+  .css-u4tvz2-MuiFormLabel-root, .css-u4tvz2-MuiFormLabel-root.Mui-focused {
+    font-size: 12px !important;
+  }
+}
+
+@media (min-width: 480px) {
+  .css-ahj2mt-MuiTypography-root {
+    font-size: 1.5vw !important;
+  }
+
+  .css-u4tvz2-MuiFormLabel-root, .css-u4tvz2-MuiFormLabel-root.Mui-focused {
+    font-size: 1.7vw !important;
+  }
 }

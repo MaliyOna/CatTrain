@@ -12,6 +12,9 @@ import RadioButtonsGroup from '../../shared/components/RadioGroup/RadioGroup';
 import { Block } from '../../shared/components/Block/Block';
 import { Button } from '../../shared/components/Button/Button';
 import { PopupWindow } from '../../shared/components/PopupWindow/PopupWindow';
+import { Loader } from '../../shared/components/Loader/Loader';
+import toast from 'react-hot-toast';
+
 
 export function CreateUpdateCoursePage() {
     const [title, setTitle] = useState("");
@@ -22,6 +25,7 @@ export function CreateUpdateCoursePage() {
     const [topics, setTopic] = useState(null);
     const [showCreateTopic, setShowCreateTopic] = useState(false);
     const [newTopic, setNewTopic] = useState("");
+    const [isLoaded, setIsLoader] = useState(false);
     const params = useParams();
 
     const levels = ["Начальный", "Средний", "Продвинутый"]
@@ -31,6 +35,7 @@ export function CreateUpdateCoursePage() {
     const [editorStateDescription, setEditorStateDescription] = useState(null);
 
     useEffect(() => {
+        setIsLoader(true);
         loadCourseInformation();
     }, [])
 
@@ -39,18 +44,26 @@ export function CreateUpdateCoursePage() {
     }, [description]);
 
     const loadCourseInformation = async () => {
-        const courseId = params.courseId;
-        const data = await getCourseById(courseId);
-        console.log(data);
-        console.log(data.data);
-        setCourse(data.data);
-        setTitle(data.data.title);
-        setDescription(data.data.description);
-        setTargetLevel(data.data.level);
-        setTargetLanguage(data.data.progLanguage == null ? "HTML" : data.data.progLanguage);
-        setTopic(data.data.topics)
-        const descriptionData = data.data.description;
-        loadDescriptionEditor(descriptionData);
+        try {
+            const courseId = params.courseId;
+            const data = await getCourseById(courseId);
+
+            setCourse(data.data);
+            setTitle(data.data.title);
+            setDescription(data.data.description);
+            setTargetLevel(data.data.level);
+            setTargetLanguage(data.data.progLanguage == null ? "HTML" : data.data.progLanguage);
+            setTopic(data.data.topics)
+
+            const descriptionData = data.data.description;
+            loadDescriptionEditor(descriptionData);
+        } catch (error) {
+
+        }
+        finally {
+            setIsLoader(false);
+        }
+
     }
 
     async function loadDescriptionEditor(descriptionData) {
@@ -70,7 +83,6 @@ export function CreateUpdateCoursePage() {
         const data = convertToRaw(state.getCurrentContent());
         const dataJson = JSON.stringify(data);
         await updateCourseDescription(params.courseId, dataJson);
-        await loadCourseInformation();
     };
 
     async function levelChangeClick(event) {
@@ -87,7 +99,11 @@ export function CreateUpdateCoursePage() {
     }
 
     async function createTopicClick() {
+        setIsLoader(true);
+        
         await addNewTopicToCourse(params.courseId, newTopic);
+        setShowCreateTopic(false);
+        setNewTopic("");
         await loadCourseInformation();
     }
 
@@ -153,6 +169,8 @@ export function CreateUpdateCoursePage() {
                     </PopupWindow>
                 </div>}
             </PageContent>
+
+            <Loader show={isLoaded} />
         </>
     );
 }

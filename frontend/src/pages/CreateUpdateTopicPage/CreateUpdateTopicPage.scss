@@ -1,3 +1,51 @@
+@media (max-width: 480px) {
+    .createTopicPage__title {
+        flex-direction: column !important;
+    }
+
+    .createTopicPage {
+
+        .createTopicPage__title__name,
+        .createTopicPage__description__name,
+        .createTopicPage__examples__name,
+        .createTopicPage__exercises__name {
+            font-size: 12px !important;
+        }
+
+        .createTopicPage__title__name {
+            width: 100%;
+        }
+
+        .input_input {
+            font-size: 15px;
+            line-height: 0 !important;
+        }
+
+        .button-normal {
+            margin-top: 6px;
+            height: 30px;
+            width: 100% !important;
+            font-size: 15px;
+        }
+    }
+}
+
+@media (max-width: 690px) {
+    .createTopicPage {
+
+        .createTopicPage__title__name,
+        .createTopicPage__description__name,
+        .createTopicPage__examples__name,
+        .createTopicPage__exercises__name {
+            font-size: 14px !important;
+        }
+
+        .createTopicPage__title__name {
+            width: 100%;
+        }
+    }
+}
+
 .createTopicPage {
     display: flex;
     flex-direction: column;
@@ -18,16 +66,30 @@
     width: 45%;
 }
 
-.createTopicPage__examples__button, .createTopicPage__exercises__button {
-    .button-normal {
-        width: 25vw !important
+@media (min-width: 480px) {
+
+    .createTopicPage__exercises__button,
+    .createTopicPage__examples__button {
+        .button-normal {
+            min-width: 340.7px !important;
+        }
+    }
+
+    .createTopicPage__examples__button,
+    .createTopicPage__exercises__button {
+        .button-normal {
+            width: 25vw !important
+        }
     }
 }
+
 
 .createTopicPage__examples {
     margin-top: 1%;
 }
 
-.createTopicPage__examples__name, .createTopicPage__description__name, .createTopicPage__exercises__name {
+.createTopicPage__examples__name,
+.createTopicPage__description__name,
+.createTopicPage__exercises__name {
     font-size: 1.5vw;
 }

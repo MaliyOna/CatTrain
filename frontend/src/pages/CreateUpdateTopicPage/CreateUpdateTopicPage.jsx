@@ -11,6 +11,8 @@ import { EditorBlock } from '../../shared/components/EditorBlock/EditorBlock';
 import { Block } from '../../shared/components/Block/Block';
 import { Button } from '../../shared/components/Button/Button';
 import { PopupWindow } from '../../shared/components/PopupWindow/PopupWindow';
+import { Loader } from '../../shared/components/Loader/Loader';
+import toast from 'react-hot-toast';
 
 export function CreateUpdateTopicPage() {
     const [topic, setTopic] = useState(null);
@@ -22,6 +24,7 @@ export function CreateUpdateTopicPage() {
     const [showNewExercise, setShowNewExercise] = useState(false);
     const [newExampleTitle, setNewExampleTitle] = useState("");
     const [newExerciseTitle, setNewExerciseTitle] = useState("");
+    const [isLoaded, setIsLoader] = useState(false);
     const params = useParams();
 
     useEffect(() => {
@@ -29,15 +32,25 @@ export function CreateUpdateTopicPage() {
     }, [])
 
     async function loadTopicInformation() {
-        const data = await getTopicById(params.topicId);
+        setIsLoader(true);
 
-        setTitle(data.data.title);
-        setTopic(data.data);
-        setExamples(data.data.examples)
-        setExercises(data.data.exercises)
+        try {
+            const data = await getTopicById(params.topicId);
 
-        const descriptionData = data.data.description;
-        loadDescriptionEditor(descriptionData);
+            console.log(data.data);
+            setTitle(data.data.title);
+            setTopic(data.data);
+            setExamples(data.data.examples)
+            setExercises(data.data.exercises)
+
+            const descriptionData = data.data.description;
+            loadDescriptionEditor(descriptionData);
+        } catch (error) {
+            toast.error("Ошибка сервера");
+        }
+        finally {
+            setIsLoader(false);
+        }
     }
 
     async function loadDescriptionEditor(descriptionData) {
@@ -53,8 +66,17 @@ export function CreateUpdateTopicPage() {
     }
 
     async function updateTopicName(value) {
-        setTitle(value);
-        await updateTopicTitle(params.topicId, value);
+        try {
+            setIsLoader(true);
+
+            setTitle(value);
+            await updateTopicTitle(params.topicId, value);
+        } catch (error) {
+            toast.error("Ошибка сервера");
+        }
+        finally {
+            setIsLoader(false);
+        }
     }
 
     async function updateTextDescription(state) {
@@ -65,16 +87,35 @@ export function CreateUpdateTopicPage() {
     }
 
     async function createNewExample() {
-        await addNewExampleToTopic(params.topicId, newExampleTitle);
-        loadTopicInformation();
-        setShowNewExample(false);
+        try {
+            setIsLoader(true);
+
+            await addNewExampleToTopic(params.topicId, newExampleTitle);
+            await loadTopicInformation();
+            setShowNewExample(false);
+            setNewExampleTitle("");
+        } catch (error) {
+            toast.error("Ошибка сервера");
+        }
+        finally {
+            setIsLoader(false);
+        }
     }
 
     async function createNewExercise() {
-        console.log(1);
-        await addNewExerciseToTopic(params.topicId, newExerciseTitle);
-        loadTopicInformation();
-        setShowNewExercise(false);
+        try {
+            setIsLoader(true);
+            await addNewExerciseToTopic(params.topicId, newExerciseTitle);
+            await loadTopicInformation();
+            setShowNewExercise(false);
+            setNewExerciseTitle("");
+        } catch (error) {
+            toast.error("Ошибка сервера");
+        }
+        finally {
+            setIsLoader(false);
+        }
+
     }
 
     return (
@@ -85,7 +126,7 @@ export function CreateUpdateTopicPage() {
                 {topic &&
                     <div className='createTopicPage'>
                         <div className='createTopicPage__title'>
-                            <div className='createTopicPage__title__name'>Название курса: </div>
+                            <div className='createTopicPage__title__name'>Название темы: </div>
                             <div className='createTopicPage__title__input'>
                                 <Input
                                     type="text"
@@ -113,9 +154,9 @@ export function CreateUpdateTopicPage() {
                             </div>
 
                             <div>
-                                {examples.map(example =>
+                                {examples && examples.map(example =>
                                     <div className='createTopicPage__examples__example'>
-                                        <Block key={example._id} title={example.title} navigate={`/factorycourses/${params.courseId}/topic/${topic._id}/example/${example._id}`}/>
+                                        <Block key={example._id} title={example.title} navigate={`/factorycourses/${params.courseId}/topic/${topic._id}/example/${example._id}`} />
                                     </div>
                                 )}
                             </div>
@@ -130,15 +171,15 @@ export function CreateUpdateTopicPage() {
                             </div>
 
                             <div>
-                                {exercises.map(exercise => 
+                                {exercises && exercises.map(exercise =>
                                     <div className='createTopicPage__exercises__exercise'>
-                                        <Block key={exercise._id} title={exercise.title} navigate={`/factorycourses/${params.courseId}/topic/${topic._id}/exercise/${exercise._id}`}/>
-                                    </div>   
+                                        <Block key={exercise._id} title={exercise.title} navigate={`/factorycourses/${params.courseId}/topic/${topic._id}/exercise/${exercise._id}`} />
+                                    </div>
                                 )}
                             </div>
 
                             <div className='createTopicPage__exercises__button'>
-                                <Button onClick={() => setShowNewExercise(true)} value='Добавить упражнение'/>
+                                <Button onClick={() => setShowNewExercise(true)} value='Добавить упражнение' />
                             </div>
                         </div>
                     </div>
@@ -176,6 +217,8 @@ export function CreateUpdateTopicPage() {
                     <Button onClick={() => setShowNewExercise(false)} color='red' value='Отмена' />
                 </div>
             </PopupWindow>
+
+            <Loader show={isLoaded} />
         </>
     );
 }

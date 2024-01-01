@@ -15,6 +15,9 @@ import 'prismjs/themes/prism.css';
 import { CodeEditor } from '../../shared/components/CodeEditor/CodeEditor';
 import { getExerciseById, updateExerciseDescription, updateExerciseTitle } from '../../shared/api/exerciseApi';
 import { updateExerciseCode } from '../../shared/api/codeApi';
+import { FrameContent } from '../../shared/components/FrameContent/FrameContent';
+import { Loader } from '../../shared/components/Loader/Loader';
+import toast from 'react-hot-toast';
 
 export function CreateUpdateExercisePage() {
     const [exercise, setExercise] = useState(null);
@@ -24,47 +27,34 @@ export function CreateUpdateExercisePage() {
     const [startCSS, setStartCSS] = useState("");
     const [rightHTML, setRightHTML] = useState("");
     const [rightCSS, setRightCSS] = useState("");
+    const [isLoaded, setIsLoader] = useState(false);
 
     const params = useParams();
-
-    const startCodeContent = `
-    <html>
-      <head>
-        <style>${startCSS}</style>
-      </head>
-      <body>
-        ${startHTML}
-      </body>
-    </html>
-  `;
-
-    const rightCodeContent = `
-    <html>
-      <head>
-        <style>${rightCSS}</style>
-      </head>
-      <body>
-        ${rightHTML}
-      </body>
-    </html>
-  `;
 
     useEffect(() => {
         loadInformation();
     }, [])
 
     async function loadInformation() {
-        const data = await getExerciseById(params.exerciseId);
-        console.log(data);
-        setExercise(data.data)
-        setTitle(data.data.title);
-        setStartHTML(data.data.startCodeHTML.code);
-        setStartCSS(data.data.startCodeCSS.code);
-        setRightHTML(data.data.rightCodeHTML.code);
-        setRightCSS(data.data.rightCodeCSS.code);
+        setIsLoader(true);
 
-        const descriptionData = data.data.description;
-        loadDescriptionEditor(descriptionData);
+        try {
+            const data = await getExerciseById(params.exerciseId);
+            setExercise(data.data)
+            setTitle(data.data.title);
+            setStartHTML(data.data.startCodeHTML.code);
+            setStartCSS(data.data.startCodeCSS.code);
+            setRightHTML(data.data.rightCodeHTML.code);
+            setRightCSS(data.data.rightCodeCSS.code);
+
+            const descriptionData = data.data.description;
+            loadDescriptionEditor(descriptionData);
+        } catch (error) {
+            toast.error("Ошибка сервера");
+        }
+        finally {
+            setIsLoader(false);
+        }
     }
 
     async function loadDescriptionEditor(descriptionData) {
@@ -80,35 +70,59 @@ export function CreateUpdateExercisePage() {
     }
 
     async function updateExerciseName(value) {
-        setTitle(value);
-        await updateExerciseTitle(params.exerciseId, value);
+        try {
+            setTitle(value);
+            await updateExerciseTitle(params.exerciseId, value);
+        } catch (error) {
+            toast.error("Ошибка сервера");
+        }
     }
 
     async function updateTextDescription(state) {
-        setEditorStateDescription(state);
-        const data = convertToRaw(state.getCurrentContent());
-        const dataJson = JSON.stringify(data);
-        await updateExerciseDescription(params.exerciseId, dataJson);
+        try {
+            setEditorStateDescription(state);
+            const data = convertToRaw(state.getCurrentContent());
+            const dataJson = JSON.stringify(data);
+            await updateExerciseDescription(params.exerciseId, dataJson);
+        } catch (error) {
+            toast.error("Ошибка сервера");
+        }
     }
 
     async function updateExerciseHTMLClick(value) {
-        setStartHTML(value);
-        await updateExerciseCode(exercise.startCodeHTML._id, value);
+        try {
+            setStartHTML(value);
+            await updateExerciseCode(exercise.startCodeHTML._id, value);
+        } catch (error) {
+            toast.error("Ошибка сервера");
+        }
     }
 
     async function updateExerciseCssClick(value) {
-        setStartCSS(value)
-        await updateExerciseCode(exercise.startCodeCSS._id, value);
+        try {
+            setStartCSS(value)
+            await updateExerciseCode(exercise.startCodeCSS._id, value);
+        } catch (error) {
+            toast.error("Ошибка сервера");
+        }
     }
 
     async function updateExerciseRightHTMLClick(value) {
-        setRightHTML(value);
-        await updateExerciseCode(exercise.rightCodeHTML._id, value);
+        try {
+            setRightHTML(value);
+            await updateExerciseCode(exercise.rightCodeHTML._id, value);
+        } catch (error) {
+            toast.error("Ошибка сервера");
+        }
     }
 
     async function updateExerciseRightCssClick(value) {
-        setRightCSS(value)
-        await updateExerciseCode(exercise.rightCodeCSS._id, value);
+        try {
+            setRightCSS(value)
+            await updateExerciseCode(exercise.rightCodeCSS._id, value);
+        } catch (error) {
+            toast.error("Ошибка сервера");
+        }
     }
 
     return (
@@ -166,7 +180,7 @@ export function CreateUpdateExercisePage() {
 
 
                             <div className='createExercisePage__code__block'>
-                                <iframe srcDoc={startCodeContent} title="Preview" style={{ width: '100%', height: '400px', border: '1px solid white' }} />
+                                <FrameContent exampleCSS={startCSS} exampleHTML={startHTML} />
                             </div>
                         </div>
 
@@ -199,12 +213,13 @@ export function CreateUpdateExercisePage() {
 
 
                             <div className='createExercisePage__code__block'>
-                                <iframe srcDoc={rightCodeContent} title="Preview" style={{ width: '100%', height: '400px', border: '1px solid white' }} />
+                                <FrameContent exampleCSS={rightCSS} exampleHTML={rightHTML} />
                             </div>
                         </div>
                     </div>
                 }
             </PageContent>
+            <Loader show={isLoaded} />
         </>
     );
 }

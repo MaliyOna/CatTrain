@@ -10,6 +10,19 @@
     }
 
 }
+
+@media (max-width: 800px) {
+    .openButton, .editorBlock__editor__toolbar {
+        display: none;
+    }
+
+    .editorBlock__editor{
+        .rdw-editor-main{
+            font-size: 12px !important;
+        }
+    }
+
+}
 .editorBlock__openEditor {
     position: fixed;
     right: 10px;

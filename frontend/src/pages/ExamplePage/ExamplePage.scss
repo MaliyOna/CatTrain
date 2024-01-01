@@ -1,7 +1,32 @@
+@media (max-width: 480px) {
+    .createExamplePage {
+        .examplePage__title,
+        .examplePage__description__name,
+        .examplePage__html__title,
+        .examplePage__css__title {
+            font-size: 12px;
+        }
+    }
+}
+
+@media (max-width: 800px) {
+    .examplePage__title,
+    .createExamplePage__title__name,
+    .examplePage__description__name,
+    .examplePage__html__title
+    .examplePage__css__title {
+        font-size: 14px !important;
+    }
+}
+
 .examplePage {
     display: flex;
     flex-direction: column;
     padding: 1.5vw 1vw;
+
+    .editorBlock__openEditor, .rdw-editor-toolbar{
+        display: none;
+    }
 }
 
 .examplePage__title {

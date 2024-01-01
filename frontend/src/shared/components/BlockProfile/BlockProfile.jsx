@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import Reac from 'react';
 import './BlockProfile.scss';
 import { ButtonWithDocument } from '../ButtonWithDocument/ButtonWithDocument';
 

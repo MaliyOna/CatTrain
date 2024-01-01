@@ -9,11 +9,14 @@ import { BlockProfile } from '../../shared/components/BlockProfile/BlockProfile'
 import { Button } from '../../shared/components/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import { removeToken } from '../../shared/helpers/token';
+import { Loader } from '../../shared/components/Loader/Loader';
+import toast from 'react-hot-toast';
 
 export function ProfilePage() {
     const [courses, setCourses] = useState();
     const [user, setUser] = useState();
     const [userTopics, setUserTopics] = useState();
+    const [isLoaded, setIsLoader] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -21,18 +24,23 @@ export function ProfilePage() {
     }, [])
 
     async function loadInformation() {
-        const user = await getUser(localStorage.getItem("userName"));
-        console.log(user);
-        setUser(user.data);
+        setIsLoader(true);
 
-        const filteredUserTopics = user.data.userTopics.filter(userTopic => userTopic.completedExercises.length !== 0);
-        setUserTopics(filteredUserTopics);
-        console.log("1", filteredUserTopics);
-        const filterCompletedTopics = filteredUserTopics.filter(userTopic => userTopic.completedExercises.length === userTopic.countOfAllExercises);
-        console.log("2", filterCompletedTopics)
+        try {
+            const user = await getUser(localStorage.getItem("userName"));
+            setUser(user.data);
 
-        const courses = await getAllCourses();
-        setCourses(courses.data);
+            const filteredUserTopics = user.data.userTopics.filter(userTopic => userTopic.completedExercises.length !== 0);
+            setUserTopics(filteredUserTopics);
+
+            const courses = await getAllCourses();
+            setCourses(courses.data);
+        } catch (error) {
+            toast.error("Ошибка сервера");
+        }
+        finally {
+            setIsLoader(false);
+        }
     }
 
     async function logout() {
@@ -49,16 +57,17 @@ export function ProfilePage() {
                     <div className='profilePage'>
                         <div className='profilePage__courses'>
                             {userTopics && courses && userTopics.map(userTopic =>
-                                <BlockProfile title={courses.find(course => course._id.toString() === userTopic.courseId).title} engTitle={courses.find(course => course._id.toString() === userTopic.courseId).englishTitle} completed={`${userTopic.completedExercises.length}/${userTopic.countOfAllExercises}`} completedAll={userTopic.completedExercises.length === userTopic.countOfAllExercises} />
+                                <BlockProfile key={userTopic._id} title={courses.find(course => course._id.toString() === userTopic.courseId).title} engTitle={courses.find(course => course._id.toString() === userTopic.courseId).englishTitle} completed={`${userTopic.completedExercises.length}/${userTopic.countOfAllExercises}`} completedAll={userTopic.completedExercises.length === userTopic.countOfAllExercises} />
                             )}
                         </div>
 
                         <div className='profilePage__logout'>
-                                <Button value="Выход" onClick={() => logout()}/>
+                            <Button value="Выход" onClick={() => logout()} />
                         </div>
                     </div>
                 }
             </PageContent>
+            <Loader show={isLoaded} />
         </>
     );
 }

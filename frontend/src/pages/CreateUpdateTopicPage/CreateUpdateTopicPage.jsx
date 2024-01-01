@@ -37,7 +37,6 @@ export function CreateUpdateTopicPage() {
         try {
             const data = await getTopicById(params.topicId);
 
-            console.log(data.data);
             setTitle(data.data.title);
             setTopic(data.data);
             setExamples(data.data.examples)
@@ -67,15 +66,10 @@ export function CreateUpdateTopicPage() {
 
     async function updateTopicName(value) {
         try {
-            setIsLoader(true);
-
             setTitle(value);
             await updateTopicTitle(params.topicId, value);
         } catch (error) {
             toast.error("Ошибка сервера");
-        }
-        finally {
-            setIsLoader(false);
         }
     }
 

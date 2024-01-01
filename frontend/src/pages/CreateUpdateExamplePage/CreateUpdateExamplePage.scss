@@ -1,3 +1,28 @@
+@media (max-width: 480px) {
+    .createExamplePage {
+        .input_input {
+            font-size: 15px;
+            line-height: 0 !important;
+        }
+
+        .createExamplePage__title {
+            flex-direction: column !important;
+        }
+
+        .createExamplePage__title__name,
+        .createExamplePage__description__name {
+            font-size: 12px;
+        }
+    }
+}
+
+@media (max-width: 800px) {
+    .createExamplePage__title__name,
+    .createExamplePage__description__name {
+        font-size: 14px !important;
+    }
+}
+
 .createExamplePage {
     display: flex;
     flex-direction: column;
@@ -25,8 +50,7 @@
 }
 
 .createExamplePage__code__html__editor,
-.createExamplePage__code__css__editor,
-.createExamplePage__code__block {
+.createExamplePage__code__css__editor {
     border: 2px solid #777777 !important;
     border-radius: 3px;
     padding-right: 5px;
@@ -34,10 +58,9 @@
 
 .createExamplePage__code__block {
     margin-top: 1vw;
-    border: 1px solid #777777 !important;
 }
 
 .createExamplePage__code__buttonHTML,
 .createExamplePage__code__buttonCSS {
-   margin-top: 1vw; 
+    margin-top: 1vw;
 }

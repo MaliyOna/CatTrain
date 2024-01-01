@@ -3,18 +3,19 @@ import './ExamplePage.scss';
 import { PageHead } from '../../shared/components/PageHead/PageHead';
 import { PageContent } from '../../shared/components/PageContent/PageContent';
 import { Menu } from '../../shared/components/Menu/Menu';
-import { getExampleById, updateExampleDescription } from '../../shared/api/exampleApi';
+import { getExampleById } from '../../shared/api/exampleApi';
 import { useParams } from 'react-router-dom';
-import { convertToRaw, convertFromRaw, EditorState } from 'draft-js';
+import { convertFromRaw, EditorState } from 'draft-js';
 import { EditorBlock } from '../../shared/components/EditorBlock/EditorBlock';
 import SimpleCodeEditor from 'react-simple-code-editor';
 import { highlight, languages } from 'prismjs';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/themes/prism.css';
-import { updateExampleCode } from '../../shared/api/codeApi';
 import { SyntaxHighlighterLanguage } from '../../shared/components/SyntaxHighlighterLanguage/SyntaxHighlighterLanguage';
 import { FrameContent } from '../../shared/components/FrameContent/FrameContent';
+import { Loader } from '../../shared/components/Loader/Loader';
+import toast from 'react-hot-toast';
 
 export function ExamplePage() {
     const [example, setExample] = useState(null);
@@ -22,6 +23,7 @@ export function ExamplePage() {
     const [editorStateDescription, setEditorStateDescription] = useState(null);
     const [exampleHTML, setExampleHTML] = useState("");
     const [exampleCSS, setExampleCSS] = useState("");
+    const [isLoaded, setIsLoader] = useState(false);
 
     const params = useParams();
 
@@ -30,15 +32,22 @@ export function ExamplePage() {
     }, [])
 
     async function loadInformation() {
-        const data = await getExampleById(params.exampleId);
-        console.log(data);
-        setExample(data.data)
-        setTitle(data.data.title);
-        setExampleHTML(data.data.codeHTML.code);
-        setExampleCSS(data.data.codeCSS.code);
+        setIsLoader(true);
+        try {
+            const data = await getExampleById(params.exampleId);
+            setExample(data.data)
+            setTitle(data.data.title);
+            setExampleHTML(data.data.codeHTML.code);
+            setExampleCSS(data.data.codeCSS.code);
 
-        const descriptionData = data.data.description;
-        loadDescriptionEditor(descriptionData);
+            const descriptionData = data.data.description;
+            loadDescriptionEditor(descriptionData);
+        } catch (error) {
+            toast.error("Ошибка сервера");
+        }
+        finally {
+            setIsLoader(false);
+        }
     }
 
     async function loadDescriptionEditor(descriptionData) {
@@ -79,11 +88,12 @@ export function ExamplePage() {
                         </div>
 
                         <div>
-                            <FrameContent exampleCSS={exampleCSS} exampleHTML={exampleHTML}/>
+                            <FrameContent exampleCSS={exampleCSS} exampleHTML={exampleHTML} />
                         </div>
                     </div>
                 }
             </PageContent>
+            <Loader show={isLoaded} />
         </>
     );
 }

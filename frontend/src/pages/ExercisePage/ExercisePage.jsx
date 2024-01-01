@@ -4,9 +4,8 @@ import { PageHead } from '../../shared/components/PageHead/PageHead';
 import { PageContent } from '../../shared/components/PageContent/PageContent';
 import { Menu } from '../../shared/components/Menu/Menu';
 import { useParams } from 'react-router-dom';
-import { convertToRaw, convertFromRaw, EditorState } from 'draft-js';
+import { convertFromRaw, EditorState } from 'draft-js';
 import { EditorBlock } from '../../shared/components/EditorBlock/EditorBlock';
-import SimpleCodeEditor from 'react-simple-code-editor';
 import { highlight, languages } from 'prismjs';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
@@ -18,6 +17,8 @@ import { CodeEditor } from '../../shared/components/CodeEditor/CodeEditor';
 import { Button } from '../../shared/components/Button/Button';
 import { PopupWindow } from '../../shared/components/PopupWindow/PopupWindow';
 import { addExerciseToUserTopic } from '../../shared/api/courseApi';
+import { Loader } from '../../shared/components/Loader/Loader';
+import toast from 'react-hot-toast';
 
 export function ExercisePage() {
     const [exercise, setExercise] = useState(null);
@@ -27,6 +28,7 @@ export function ExercisePage() {
     const [exampleCSS, setExampleCSS] = useState("");
     const [showCheckResult, setShowCheckResult] = useState(false);
     const [resultText, setResultText] = useState(false);
+    const [isLoaded, setIsLoader] = useState(false);
 
     const params = useParams();
 
@@ -35,14 +37,24 @@ export function ExercisePage() {
     }, [])
 
     async function loadInformation() {
-        const data = await getExerciseById(params.exerciseId);
-        setExercise(data.data)
-        setTitle(data.data.title);
-        setExampleHTML(data.data.startCodeHTML.code);
-        setExampleCSS(data.data.startCodeCSS.code);
+        setIsLoader(true);
 
-        const descriptionData = data.data.description;
-        loadDescriptionEditor(descriptionData);
+        try {
+            const data = await getExerciseById(params.exerciseId);
+            setExercise(data.data)
+            setTitle(data.data.title);
+            setExampleHTML(data.data.startCodeHTML.code);
+            setExampleCSS(data.data.startCodeCSS.code);
+
+            const descriptionData = data.data.description;
+            loadDescriptionEditor(descriptionData);
+        } catch (error) {
+            toast.error("Ошибка сервера");
+        }
+        finally {
+            setIsLoader(false);
+        }
+
     }
 
     async function loadDescriptionEditor(descriptionData) {
@@ -65,16 +77,9 @@ export function ExercisePage() {
         setExampleCSS(value)
     }
 
-    
     async function checkExerciseClick() {
         const resultHTML = exercise.rightCodeHTML.code === exampleHTML;
         const resultCSS = exercise.rightCodeCSS.code === exampleCSS;
-
-        console.log(exercise.rightCodeHTML.code)
-        console.log(exampleHTML)
-        console.log(exercise.rightCodeCSS.code)
-        console.log(exampleCSS)
-
 
         if (resultHTML && resultCSS) {
             setResultText(true);
@@ -133,11 +138,13 @@ export function ExercisePage() {
                     </div>
                 }
             </PageContent>
-            
+
             <PopupWindow title="Результат проверки" open={showCheckResult}>
                 {resultText ? "Упражнение решено правильно" : "В упражнении допущена ошибка"}
-                <Button onClick={() => setShowCheckResult(false)} value="Закрыть"/>
+                <Button onClick={() => setShowCheckResult(false)} value="Закрыть" />
             </PopupWindow>
+
+            <Loader show={isLoaded} />
         </>
     );
 }

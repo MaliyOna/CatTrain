@@ -1,5 +1,14 @@
+@media (max-width: 900px) {
+    .coursePage{
+        .coursePage__title, .coursePage__level, .coursePage__language{
+            font-size: 12px;
+        }
+    }
+}
+
 .coursePage {
     padding: 1vw;
+
     .editorBlock__openEditor, .rdw-editor-toolbar{
         display: none;
     }

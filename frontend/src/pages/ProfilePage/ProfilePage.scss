@@ -1,3 +1,11 @@
 .profilePage {
     padding: 1vw;
 }
+
+@media (max-width: 800px) {
+    .profilePage__logout {
+        .button-normal {
+            width: 100% !important;
+        }
+    }
+}

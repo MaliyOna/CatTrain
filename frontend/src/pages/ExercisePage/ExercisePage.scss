@@ -1,3 +1,33 @@
+@media (max-width: 480px) {
+    .exercisePage {
+        .exercisePage__title,
+        .exercisePage__description__name,
+        .exercisePage__html__title,
+        .exercisePage__css__title {
+            font-size: 12px;
+        }
+
+        .button-normal {
+            width: 100%;
+            font-size: 12px !important;
+        }
+    }
+}
+
+@media (max-width: 800px) {
+    .exercisePage__title,
+    .exercisePage__description__name,
+    .exercisePage__html__title,
+    .exercisePage__css__title {
+        font-size: 14px !important;
+    }
+
+    .button-normal {
+        width: 100%;
+        font-size: 14px !important;
+    }
+}
+
 .exercisePage {
     display: flex;
     flex-direction: column;

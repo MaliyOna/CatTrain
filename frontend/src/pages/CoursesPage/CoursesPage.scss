@@ -1,3 +1,30 @@
+@media (max-width: 480px) {
+    .coursesPage {
+        .input_input{
+            font-size: 15px;
+            line-height: 0 !important;
+        }
+
+        .button-normal {
+            margin-top: 6px;
+            height: 30px;
+            width: 80px;
+            font-size: 15px;
+        }
+    }
+}
+
+@media (max-width: 800px) {
+    .coursesPage {
+        .button-normal {
+            margin-top: 6px;
+            height: 30px;
+            width: 80px;
+            font-size: 15px;
+        }
+    }
+}
+
 .coursesPage {
     display: flex;
     flex-direction: column;

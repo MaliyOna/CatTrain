@@ -1,3 +1,28 @@
+@media (max-width: 480px) {
+    .createExercisePage {
+        .input_input {
+            font-size: 15px;
+            line-height: 0 !important;
+        }
+
+        .createExercisePage__title {
+            flex-direction: column !important;
+        }
+
+        .createExercisePage__title__name,
+        .createExercisePage__description__name {
+            font-size: 12px;
+        }
+    }
+}
+
+@media (max-width: 800px) {
+    .createExercisePage__title__name,
+    .createExercisePage__description__name {
+        font-size: 14px !important;
+    }
+}
+
 .createExercisePage {
     display: flex;
     flex-direction: column;
@@ -25,8 +50,7 @@
 }
 
 .createExercisePage__code__html__editor,
-.createExercisePage__code__css__editor,
-.createExercisePage__code__block {
+.createExercisePage__code__css__editor{
     border: 2px solid #777777 !important;
     border-radius: 3px;
     padding-right: 5px;
@@ -34,7 +58,6 @@
 
 .createExercisePage__code__block {
     margin-top: 1vw;
-    border: 1px solid #777777 !important;
 }
 
 .createExercisePage__code__buttonHTML,

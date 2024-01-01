@@ -16,6 +16,9 @@ import 'prismjs/components/prism-javascript';
 import 'prismjs/themes/prism.css';
 import { CodeEditor } from '../../shared/components/CodeEditor/CodeEditor';
 import { updateExampleCode } from '../../shared/api/codeApi';
+import { Loader } from '../../shared/components/Loader/Loader';
+import toast from 'react-hot-toast';
+import { FrameContent } from '../../shared/components/FrameContent/FrameContent';
 
 export function CreateUpdateExamplePage() {
     const [example, setExample] = useState(null);
@@ -23,34 +26,32 @@ export function CreateUpdateExamplePage() {
     const [editorStateDescription, setEditorStateDescription] = useState(null);
     const [exampleHTML, setExampleHTML] = useState("");
     const [exampleCSS, setExampleCSS] = useState("");
+    const [isLoaded, setIsLoader] = useState(false);
 
     const params = useParams();
-
-    const iframeContent = `
-    <html>
-      <head>
-        <style>${exampleCSS}</style>
-      </head>
-      <body>
-        ${exampleHTML}
-      </body>
-    </html>
-  `;
 
     useEffect(() => {
         loadInformation();
     }, [])
 
     async function loadInformation() {
-        const data = await getExampleById(params.exampleId);
-        console.log(data);
-        setExample(data.data)
-        setTitle(data.data.title);
-        setExampleHTML(data.data.codeHTML.code);
-        setExampleCSS(data.data.codeCSS.code);
+        setIsLoader(true);
+        try {
+            const data = await getExampleById(params.exampleId);
+            setExample(data.data)
+            setTitle(data.data.title);
+            setExampleHTML(data.data.codeHTML.code);
+            setExampleCSS(data.data.codeCSS.code);
 
-        const descriptionData = data.data.description;
-        loadDescriptionEditor(descriptionData);
+            const descriptionData = data.data.description;
+            loadDescriptionEditor(descriptionData);
+        } catch (error) {
+            toast.error("Ошибка сервера");
+        }
+        finally {
+            setIsLoader(false);
+        }
+
     }
 
     async function loadDescriptionEditor(descriptionData) {
@@ -66,25 +67,41 @@ export function CreateUpdateExamplePage() {
     }
 
     async function updateExampleName(value) {
-        setTitle(value);
-        await updateExampleTitle(params.exampleId, value);
+        try {
+            setTitle(value);
+            await updateExampleTitle(params.exampleId, value);
+        } catch (error) {
+            toast.error("Ошибка сервера");
+        }
     }
 
     async function updateTextDescription(state) {
-        setEditorStateDescription(state);
-        const data = convertToRaw(state.getCurrentContent());
-        const dataJson = JSON.stringify(data);
-        await updateExampleDescription(params.exampleId, dataJson);
+        try {
+            setEditorStateDescription(state);
+            const data = convertToRaw(state.getCurrentContent());
+            const dataJson = JSON.stringify(data);
+            await updateExampleDescription(params.exampleId, dataJson);
+        } catch (error) {
+            toast.error("Ошибка сервера");
+        }
     }
 
     async function updateExampleHTMLClick(value) {
-        setExampleHTML(value);
-        await updateExampleCode(example.codeHTML._id, value);
+        try {
+            setExampleHTML(value);
+            await updateExampleCode(example.codeHTML._id, value);
+        } catch (error) {
+            toast.error("Ошибка сервера");
+        }
     }
 
     async function updateExampleCssClick(value) {
-        setExampleCSS(value)
-        await updateExampleCode(example.codeCSS._id, value);
+        try {
+            setExampleCSS(value)
+            await updateExampleCode(example.codeCSS._id, value);
+        } catch (error) {
+            toast.error("Ошибка сервера");
+        }
     }
 
     return (
@@ -142,12 +159,14 @@ export function CreateUpdateExamplePage() {
 
 
                             <div className='createExamplePage__code__block'>
-                                <iframe srcDoc={iframeContent} title="Preview" style={{ width: '100%', height: '400px', border: '1px solid white' }} />
+                                <FrameContent exampleCSS={exampleCSS} exampleHTML={exampleHTML} />
                             </div>
                         </div>
                     </div>
                 }
             </PageContent>
+
+            <Loader show={isLoaded} />
         </>
     );
 }

@@ -9,6 +9,8 @@ import { EditorState, convertFromRaw } from 'draft-js';
 import { EditorBlock } from '../../shared/components/EditorBlock/EditorBlock';
 import { Block } from '../../shared/components/Block/Block';
 import { getTopicById } from '../../shared/api/topicApi';
+import { Loader } from '../../shared/components/Loader/Loader';
+import toast from 'react-hot-toast';
 
 export function TopicPage() {
     const [topic, setTopic] = useState(null);
@@ -17,6 +19,7 @@ export function TopicPage() {
     const [editorDescription, setEditorDescription] = useState();
     const [examples, setExamples] = useState(null);
     const [exercises, setExercises] = useState(null);
+    const [isLoaded, setIsLoader] = useState(false);
     const params = useParams();
 
     useEffect(() => {
@@ -26,23 +29,40 @@ export function TopicPage() {
     }, [])
 
     async function checkConnection() {
-        await checkOrAddConnectionTopic(params.courseId, params.topicId, localStorage.getItem("userName"));
+        try {
+            setIsLoader(true);
+
+            await checkOrAddConnectionTopic(params.courseId, params.topicId, localStorage.getItem("userName"));
+        } catch (error) {
+            toast.error("Ошибка сервера");
+        }
+        finally {
+            setIsLoader(false);
+        }
     }
 
-    const loadCourseInformation = async () => {
-        const topicId = params.topicId;
-        const data = await getTopicById(topicId);
-        console.log(data.data);
-        setTopic(data.data);
-        setTitle(data.data.title);
-        setDescription(data.data.description);
-        setExamples(data.data.examples);
-        setExercises(data.data.exercises);
-        const descriptionData = data.data.description;
-        loadDescriptionEditor(descriptionData);
+    async function loadCourseInformation() {
+        setIsLoader(true);
+
+        try {
+            const topicId = params.topicId;
+            const data = await getTopicById(topicId);
+            setTopic(data.data);
+            setTitle(data.data.title);
+            setDescription(data.data.description);
+            setExamples(data.data.examples);
+            setExercises(data.data.exercises);
+            const descriptionData = data.data.description;
+            loadDescriptionEditor(descriptionData);
+        } catch (error) {
+            toast.error("Ошибка сервера");
+        }
+        finally {
+            setIsLoader(false);
+        }
     }
 
-    async function loadDescriptionEditor(descriptionData) {
+    function loadDescriptionEditor(descriptionData) {
         if (descriptionData) {
             const content = convertFromRaw(JSON.parse(descriptionData));
 
@@ -81,6 +101,7 @@ export function TopicPage() {
                         </div>
                     </div>
                 }
+                <Loader show={isLoaded} />
             </PageContent>
         </>
     );

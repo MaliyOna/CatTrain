@@ -58,7 +58,7 @@ export function CreateUpdateCoursePage() {
             const descriptionData = data.data.description;
             loadDescriptionEditor(descriptionData);
         } catch (error) {
-
+            toast.error("Ошибка сервера");
         }
         finally {
             setIsLoader(false);
@@ -79,32 +79,51 @@ export function CreateUpdateCoursePage() {
     }
 
     const updateTextDescription = async (state) => {
-        setEditorStateDescription(state);
-        const data = convertToRaw(state.getCurrentContent());
-        const dataJson = JSON.stringify(data);
-        await updateCourseDescription(params.courseId, dataJson);
+        try {
+            setEditorStateDescription(state);
+            const data = convertToRaw(state.getCurrentContent());
+            const dataJson = JSON.stringify(data);
+            await updateCourseDescription(params.courseId, dataJson);
+        } catch (error) {
+            toast.error("Ошибка сервера");
+        }
+
     };
 
     async function levelChangeClick(event) {
-        const newLevel = event.target.value;
+        try {
+            const newLevel = event.target.value;
 
-        await updateCourseLevel(params.courseId, newLevel);
-        setTargetLevel(newLevel);
+            await updateCourseLevel(params.courseId, newLevel);
+            setTargetLevel(newLevel);
+        } catch (error) {
+            toast.error("Ошибка сервера");
+        }
     }
 
     async function languageChangeClick(event) {
-        const newLanguage = event.target.value;
-        setTargetLanguage(newLanguage);
-        await updateCourseLanguage(params.courseId, newLanguage);
+        try {
+            const newLanguage = event.target.value;
+            setTargetLanguage(newLanguage);
+            await updateCourseLanguage(params.courseId, newLanguage);
+        } catch (error) {
+            toast.error("Ошибка сервера");
+        }
     }
 
     async function createTopicClick() {
-        setIsLoader(true);
-        
-        await addNewTopicToCourse(params.courseId, newTopic);
-        setShowCreateTopic(false);
-        setNewTopic("");
-        await loadCourseInformation();
+        try {
+            setIsLoader(true);
+            await addNewTopicToCourse(params.courseId, newTopic);
+            setShowCreateTopic(false);
+            setNewTopic("");
+            await loadCourseInformation();
+        } catch (error) {
+            toast.error("Ошибка сервера");
+        }
+        finally{
+            setIsLoader(false);
+        }
     }
 
     return (

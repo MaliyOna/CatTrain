@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { highlight, languages } from 'prismjs';
 import SimpleCodeEditor from 'react-simple-code-editor';
 import './CodeEditor.scss';
@@ -12,7 +12,7 @@ export function CodeEditor(props) {
     }
 
     return (
-        <div>
+        <div className='codeEditor'>
             <SimpleCodeEditor
                 value={props.example}
                 onValueChange={example => updateExample(example)}

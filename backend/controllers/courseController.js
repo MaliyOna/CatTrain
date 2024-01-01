@@ -19,6 +19,7 @@ class courseController {
 
             const course = new Course({
                 title: title,
+                englishTitle: englishTitle,
                 description: "{\"blocks\":[{\"key\":\"636a5\",\"text\":\"default\",\"type\":\"unstyled\",\"depth\":0,\"inlineStyleRanges\":[],\"entityRanges\":[],\"data\":{}}],\"entityMap\":{}}",
                 level: "Начальный",
                 progLanguage: progLanguage
@@ -146,11 +147,14 @@ class courseController {
 
             const topicExists = user.userTopics.some(userTopic => userTopic.topic.equals(topicId));
 
+            const topic = await Topic.findById(topicId);
+
             if (!topicExists) {
                 const userTopic = new UserTopics({
                     topic: topicId,
                     courseId: courseId,
-                    completedExercises: []
+                    completedExercises: [],
+                    countOfAllExercises: topic.exercises.length
                 })
 
                 await userTopic.save();

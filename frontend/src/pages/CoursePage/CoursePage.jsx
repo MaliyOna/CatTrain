@@ -22,7 +22,6 @@ export function CoursePage() {
     useEffect(() => {
         loadCourseInformation();
         checkConnection();
-
     }, [])
 
     async function checkConnection() {

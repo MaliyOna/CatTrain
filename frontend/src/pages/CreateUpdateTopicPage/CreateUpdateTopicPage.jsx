@@ -3,7 +3,7 @@ import './CreateUpdateTopicPage.scss';
 import { PageHead } from '../../shared/components/PageHead/PageHead';
 import { PageContent } from '../../shared/components/PageContent/PageContent';
 import { Menu } from '../../shared/components/Menu/Menu';
-import { addNewExampleToTopic, addNewExerciseToTopic, getTopicById, updateTopicDescription, updateTopicTitle } from '../../shared/api/topicApi';
+import { addNewExampleToTopic, addNewExerciseToTopic, deleteTopic, getTopicById, updateTopicDescription, updateTopicTitle } from '../../shared/api/topicApi';
 import { useParams } from 'react-router-dom';
 import { Input } from '../../shared/components/Input/Input';
 import { convertToRaw, convertFromRaw, EditorState } from 'draft-js';
@@ -12,6 +12,7 @@ import { Block } from '../../shared/components/Block/Block';
 import { Button } from '../../shared/components/Button/Button';
 import { PopupWindow } from '../../shared/components/PopupWindow/PopupWindow';
 import { Loader } from '../../shared/components/Loader/Loader';
+import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 export function CreateUpdateTopicPage() {
@@ -26,6 +27,7 @@ export function CreateUpdateTopicPage() {
     const [newExerciseTitle, setNewExerciseTitle] = useState("");
     const [isLoaded, setIsLoader] = useState(false);
     const params = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         loadTopicInformation();
@@ -109,7 +111,19 @@ export function CreateUpdateTopicPage() {
         finally {
             setIsLoader(false);
         }
+    }
 
+    async function deleteTopicClick() {
+        try {
+            setIsLoader(true);
+            await deleteTopic(params.topicId);
+        } catch (error) {
+            toast.error("Ошибка сервера");
+        }
+        finally {
+            setIsLoader(false);
+            navigate(`/factorycourses/${params.courseId}`);
+        }
     }
 
     return (
@@ -175,6 +189,10 @@ export function CreateUpdateTopicPage() {
                             <div className='createTopicPage__exercises__button'>
                                 <Button onClick={() => setShowNewExercise(true)} value='Добавить упражнение' />
                             </div>
+                        </div>
+
+                        <div className='createTopicPage__deleteTopic'>
+                            <Button onClick={() => deleteTopicClick()} value='Удалить тему' color='red'/>
                         </div>
                     </div>
                 }

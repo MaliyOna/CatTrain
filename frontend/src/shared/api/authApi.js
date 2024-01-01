@@ -11,3 +11,12 @@ export async function loginUser(user) {
     await setToken(response.data.token)
     return response;
 }
+
+export async function changeRole(isAdmin, userName) {
+    await api.put(`/auth`, {isAdmin: isAdmin, userName: userName});
+}
+
+export async function getRole(userName) {
+    const response = await api.get(`/auth/${userName}`);
+    return response
+}

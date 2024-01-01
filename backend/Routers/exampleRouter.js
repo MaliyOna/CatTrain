@@ -9,5 +9,6 @@ const controller = new exampleController();
 router.get('/:exampleId', controller.getExampleById);
 router.put('/:exampleId/title', controller.updateExampleTitle);
 router.put('/:exampleId/description', controller.updateDescription);
+router.delete('/:exampleId', controller.deleteExample);
 
 module.exports = router;

@@ -12,3 +12,7 @@ export async function updateExerciseTitle(exerciseId, title) {
 export async function updateExerciseDescription(exerciseId, description) {
     await api.put(`/exercises/${exerciseId}/description`, {description: description});
 }
+
+export async function deleteExercise(exerciseId) {
+    await api.delete(`/exercises/${exerciseId}`);
+}

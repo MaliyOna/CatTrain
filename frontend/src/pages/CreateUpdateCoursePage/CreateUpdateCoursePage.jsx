@@ -4,7 +4,7 @@ import { PageHead } from '../../shared/components/PageHead/PageHead';
 import { PageContent } from '../../shared/components/PageContent/PageContent';
 import { Menu } from '../../shared/components/Menu/Menu';
 import { Input } from '../../shared/components/Input/Input';
-import { addNewTopicToCourse, getCourseById, updateCourseDescription, updateCourseLanguage, updateCourseLevel } from '../../shared/api/courseApi';
+import { addNewTopicToCourse, deleteCourse, getCourseById, updateCourseDescription, updateCourseLanguage, updateCourseLevel } from '../../shared/api/courseApi';
 import { useParams } from 'react-router-dom';
 import { convertToRaw, convertFromRaw, EditorState } from 'draft-js';
 import { EditorBlock } from '../../shared/components/EditorBlock/EditorBlock';
@@ -13,6 +13,7 @@ import { Block } from '../../shared/components/Block/Block';
 import { Button } from '../../shared/components/Button/Button';
 import { PopupWindow } from '../../shared/components/PopupWindow/PopupWindow';
 import { Loader } from '../../shared/components/Loader/Loader';
+import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 
@@ -26,6 +27,7 @@ export function CreateUpdateCoursePage() {
     const [showCreateTopic, setShowCreateTopic] = useState(false);
     const [newTopic, setNewTopic] = useState("");
     const [isLoaded, setIsLoader] = useState(false);
+    const navigate = useNavigate();
     const params = useParams();
 
     const levels = ["Начальный", "Средний", "Продвинутый"]
@@ -43,7 +45,7 @@ export function CreateUpdateCoursePage() {
         loadDescriptionEditor();
     }, [description]);
 
-    const loadCourseInformation = async () => {
+    async function loadCourseInformation() {
         try {
             const courseId = params.courseId;
             const data = await getCourseById(courseId);
@@ -87,7 +89,6 @@ export function CreateUpdateCoursePage() {
         } catch (error) {
             toast.error("Ошибка сервера");
         }
-
     };
 
     async function levelChangeClick(event) {
@@ -121,9 +122,18 @@ export function CreateUpdateCoursePage() {
         } catch (error) {
             toast.error("Ошибка сервера");
         }
-        finally{
+        finally {
             setIsLoader(false);
         }
+    }
+
+    async function deleteTopicClick() {
+        try {
+            await deleteCourse(params.courseId);
+        } catch (error) {
+            toast.error("Ошибка сервера");
+        }
+        navigate(`/factorycourses`);
     }
 
     return (
@@ -168,7 +178,13 @@ export function CreateUpdateCoursePage() {
                         )}
                     </div>
                     <div className='createCoursePage__buttonCreate'>
-                        <Button onClick={() => setShowCreateTopic(true)} value='Добавить тему' />
+                        <div className='createCoursePage__buttonCreate__create'>
+                            <Button onClick={() => setShowCreateTopic(true)} value='Добавить тему' />
+                        </div>
+
+                        <div className='createCoursePage__buttonCreate__delete'>
+                            <Button onClick={() => deleteTopicClick()} value='Удалить тему' color='red' />
+                        </div>
                     </div>
 
                     <PopupWindow title="Добавить тему" open={showCreateTopic}>

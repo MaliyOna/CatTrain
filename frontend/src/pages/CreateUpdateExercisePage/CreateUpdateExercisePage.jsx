@@ -13,11 +13,13 @@ import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/themes/prism.css';
 import { CodeEditor } from '../../shared/components/CodeEditor/CodeEditor';
-import { getExerciseById, updateExerciseDescription, updateExerciseTitle } from '../../shared/api/exerciseApi';
+import { deleteExercise, getExerciseById, updateExerciseDescription, updateExerciseTitle } from '../../shared/api/exerciseApi';
 import { updateExerciseCode } from '../../shared/api/codeApi';
 import { FrameContent } from '../../shared/components/FrameContent/FrameContent';
 import { Loader } from '../../shared/components/Loader/Loader';
 import toast from 'react-hot-toast';
+import { Button } from '../../shared/components/Button/Button';
+import { useNavigate } from 'react-router-dom';
 
 export function CreateUpdateExercisePage() {
     const [exercise, setExercise] = useState(null);
@@ -28,6 +30,7 @@ export function CreateUpdateExercisePage() {
     const [rightHTML, setRightHTML] = useState("");
     const [rightCSS, setRightCSS] = useState("");
     const [isLoaded, setIsLoader] = useState(false);
+    const navigate = useNavigate();
 
     const params = useParams();
 
@@ -125,6 +128,17 @@ export function CreateUpdateExercisePage() {
         }
     }
 
+    async function deleteExerciseClick(){
+        try {
+            await deleteExercise(params.exerciseId);
+        } catch (error) {
+            toast.error("Ошибка сервера");
+        }
+        finally {
+            navigate(`/factorycourses/${params.courseId}/topic/${params.topicId}`);
+        }
+    }
+
     return (
         <>
             <PageHead></PageHead>
@@ -215,6 +229,10 @@ export function CreateUpdateExercisePage() {
                             <div className='createExercisePage__code__block'>
                                 <FrameContent exampleCSS={rightCSS} exampleHTML={rightHTML} />
                             </div>
+                        </div>
+
+                        <div className='createExercisePage__deleteButton'>
+                            <Button value='Удалить упражнение' color='red' onClick={() => deleteExerciseClick()}/>
                         </div>
                     </div>
                 }

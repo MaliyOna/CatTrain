@@ -20,3 +20,7 @@ export async function addNewExampleToTopic(topicId, exampleTitle) {
 export async function addNewExerciseToTopic(topicId, exerciseTitle) {
     await api.post(`/topics/${topicId}/exercise`, {title: exerciseTitle});
 }
+
+export async function deleteTopic(topicId) {
+    await api.delete(`/topics/${topicId}`);
+}

@@ -11,12 +11,17 @@ import { useNavigate } from 'react-router-dom';
 import { removeToken } from '../../shared/helpers/token';
 import { Loader } from '../../shared/components/Loader/Loader';
 import toast from 'react-hot-toast';
+import { CheckboxCheck } from '../../shared/components/CheckboxCheck/CheckboxCheck';
+import { changeRole, getRole } from '../../shared/api/authApi';
+import SimpleSnackbar from '../../shared/components/SimpleSnackbar/SimpleSnackbar';
 
 export function ProfilePage() {
     const [courses, setCourses] = useState();
     const [user, setUser] = useState();
     const [userTopics, setUserTopics] = useState();
     const [isLoaded, setIsLoader] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [openSnackbar, setOpenSnackbar] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -35,6 +40,10 @@ export function ProfilePage() {
 
             const courses = await getAllCourses();
             setCourses(courses.data);
+
+            const role = await getRole(localStorage.getItem("userName"));
+            console.log(role.data.role)
+            setIsAdmin(role.data.role === "ADMIN" ? true : false);
         } catch (error) {
             toast.error("Ошибка сервера");
         }
@@ -46,6 +55,11 @@ export function ProfilePage() {
     async function logout() {
         removeToken();
         navigate(`/login`);
+    }
+
+    async function updateRole(event){
+        await changeRole(event, localStorage.getItem("userName"));
+        setOpenSnackbar(true);
     }
 
     return (
@@ -61,9 +75,15 @@ export function ProfilePage() {
                             )}
                         </div>
 
+                        <div className='profilePage__role'>
+                            <CheckboxCheck onChange={(event) => updateRole(event)} admin={isAdmin}/>
+                        </div>
+
                         <div className='profilePage__logout'>
                             <Button value="Выход" onClick={() => logout()} />
                         </div>
+
+                        <SimpleSnackbar open={openSnackbar} setOpen={() => setOpenSnackbar(false)} text="Роль изменена"/>
                     </div>
                 }
             </PageContent>

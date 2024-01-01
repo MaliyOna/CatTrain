@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { RegistrationPage } from './pages/RegistrationPage/RegistrationPage';
 import { LoginPage } from './pages/LoginPage/LoginPage';
-import { MainPage } from './pages/MainPage/MainPage';
 import { CreateUpdateCoursePage } from './pages/CreateUpdateCoursePage/CreateUpdateCoursePage';
 import { FactoryCoursesPage } from './pages/FactoryCoursesPage/FactoryCoursesPage';
 import { CreateUpdateTopicPage } from './pages/CreateUpdateTopicPage/CreateUpdateTopicPage';
@@ -26,7 +25,6 @@ export class App extends React.Component {
             <Routes>
               <Route path="/registration" element={<RegistrationPage />} />
               <Route path="/login" element={<LoginPage />} />
-              <Route path='/mainpage' element={<MainPage />} />
               <Route path='/factorycourses' element={<FactoryCoursesPage />} />
               <Route path='/factorycourses/:courseId' element={<CreateUpdateCoursePage />} />
               <Route path='/factorycourses/:courseId/topic/:topicId' element={<CreateUpdateTopicPage />} />

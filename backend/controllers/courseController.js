@@ -33,6 +33,29 @@ class courseController {
         }
     }
 
+    async deleteCourse(req, res) {
+        try {
+            const courseId = req.params.courseId;
+
+            const usersWithCourse = await User.find({ courses: courseId });
+
+            const updatePromises = usersWithCourse.map(async (user) => {
+                user.courses = user.courses.filter((userCourseId) => userCourseId.toString() !== courseId);
+                await user.save();
+            });
+
+            await Promise.all(updatePromises);
+
+            await Course.findByIdAndDelete(courseId);
+
+            await UserTopics.deleteMany({ courseId });
+            return res.status(200).json({ message: "Курс успешно удален" });
+        } catch (error) {
+            console.log(error);
+            return res.status(400).json({ message: "Course error" });
+        }
+    }
+
     async getAllCourse(req, res) {
         try {
             const courses = await Course.find();
@@ -130,7 +153,7 @@ class courseController {
                 { $addToSet: { courses: courseId } },
                 { new: true }
             );
-            return res.status(200);
+            return res.status(200).json({ message: "Связь успешно создана" });
         } catch (error) {
             console.log(error);
             return res.status(400).json({ message: "Check or add connection course error" });
@@ -162,7 +185,7 @@ class courseController {
                 user.userTopics.push(userTopic);
                 user.save();
             }
-            return res.status(200);
+            return res.status(200).json({ message: "Завершено успешно" });
         } catch (error) {
             console.log(error);
             return res.status(400).json({ message: "Check or add connection topic error" });
@@ -186,7 +209,7 @@ class courseController {
                 userTopic.save();
             }
 
-            return res.status(200);
+            return res.status(200).json({ message: "Связь создана" });
 
         } catch (error) {
             console.log(error);

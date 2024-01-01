@@ -36,7 +36,7 @@ export function LoginPage() {
     
                 if (data.status === 200) {
                     localStorage.setItem("userName", login);
-                    navigate(`/mainpage`);
+                    navigate(`/courses`);
                 }
             } catch (error) {
                 toast.error("Не верное имя пользователя или пароль");

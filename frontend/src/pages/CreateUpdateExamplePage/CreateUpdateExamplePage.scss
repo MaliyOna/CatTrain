@@ -23,6 +23,14 @@
     }
 }
 
+.createExamplePage__deleteButton {
+    .button-normal {
+        width: 300px;
+    }
+
+    margin-top: 10px;
+}
+
 .createExamplePage {
     display: flex;
     flex-direction: column;

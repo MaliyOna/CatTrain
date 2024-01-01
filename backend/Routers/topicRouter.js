@@ -11,5 +11,6 @@ router.put('/:topicId/title', controller.updateTopicTitle);
 router.put('/:topicId/description', controller.updateTopicDescription);
 router.post('/:topicId/example', controller.addExampleToTopic);
 router.post('/:topicId/exercise', controller.addExerciseToTopic);
+router.delete('/:topicId', controller.deleteTopic);
 
 module.exports = router;

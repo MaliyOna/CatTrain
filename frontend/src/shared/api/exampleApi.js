@@ -12,3 +12,7 @@ export async function updateExampleTitle(exampleId, title) {
 export async function updateExampleDescription(exampleId, description) {
     await api.put(`/examples/${exampleId}/description`, {description: description});
 }
+
+export async function deleteExample(exampleId) {
+    await api.delete(`/examples/${exampleId}`);
+}

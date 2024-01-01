@@ -9,5 +9,6 @@ const controller = new exerciseController();
 router.get('/:exerciseId', controller.getExerciseById);
 router.put('/:exerciseId/title', controller.updateExerciseTitle);
 router.put('/:exerciseId/description', controller.updateDescription);
+router.delete('/:exerciseId', controller.deleteExample);
 
 module.exports = router;

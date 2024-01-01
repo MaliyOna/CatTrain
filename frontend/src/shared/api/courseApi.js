@@ -41,3 +41,7 @@ export async function checkOrAddConnectionTopic(courseId, topicId, userName) {
 export async function addExerciseToUserTopic(topicId, userName, exerciseId) {
     await api.put(`/courses/topic/${topicId}/exercise/${exerciseId}`, {userName: userName})
 }
+
+export async function deleteCourse(courseId) {
+    await api.delete(`/courses/${courseId}`);
+}

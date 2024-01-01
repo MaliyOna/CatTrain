@@ -3,7 +3,7 @@ import './CreateUpdateExamplePage.scss';
 import { PageHead } from '../../shared/components/PageHead/PageHead';
 import { PageContent } from '../../shared/components/PageContent/PageContent';
 import { Menu } from '../../shared/components/Menu/Menu';
-import { getExampleById, updateExampleDescription } from '../../shared/api/exampleApi';
+import { deleteExample, getExampleById, updateExampleDescription } from '../../shared/api/exampleApi';
 import { useParams } from 'react-router-dom';
 import { Input } from '../../shared/components/Input/Input';
 import { updateExampleTitle } from '../../shared/api/exampleApi';
@@ -12,6 +12,7 @@ import { EditorBlock } from '../../shared/components/EditorBlock/EditorBlock';
 import SimpleCodeEditor from 'react-simple-code-editor';
 import { highlight, languages } from 'prismjs';
 import 'prismjs/components/prism-clike';
+import { useNavigate } from 'react-router-dom';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/themes/prism.css';
 import { CodeEditor } from '../../shared/components/CodeEditor/CodeEditor';
@@ -19,6 +20,7 @@ import { updateExampleCode } from '../../shared/api/codeApi';
 import { Loader } from '../../shared/components/Loader/Loader';
 import toast from 'react-hot-toast';
 import { FrameContent } from '../../shared/components/FrameContent/FrameContent';
+import { Button } from '../../shared/components/Button/Button';
 
 export function CreateUpdateExamplePage() {
     const [example, setExample] = useState(null);
@@ -27,6 +29,7 @@ export function CreateUpdateExamplePage() {
     const [exampleHTML, setExampleHTML] = useState("");
     const [exampleCSS, setExampleCSS] = useState("");
     const [isLoaded, setIsLoader] = useState(false);
+    const navigate = useNavigate();
 
     const params = useParams();
 
@@ -104,6 +107,17 @@ export function CreateUpdateExamplePage() {
         }
     }
 
+    async function deleteExampleClick() {
+        try {
+            await deleteExample(params.exampleId);
+        } catch (error) {
+            toast.error("Ошибка сервера");
+        }
+        finally {
+            navigate(`/factorycourses/${params.courseId}/topic/${params.topicId}`);
+        }
+    }
+
     return (
         <>
             <PageHead></PageHead>
@@ -161,6 +175,10 @@ export function CreateUpdateExamplePage() {
                             <div className='createExamplePage__code__block'>
                                 <FrameContent exampleCSS={exampleCSS} exampleHTML={exampleHTML} />
                             </div>
+                        </div>
+
+                        <div className='createExamplePage__deleteButton'>
+                            <Button value='Удалить пример' color='red' onClick={() => deleteExampleClick()} />
                         </div>
                     </div>
                 }

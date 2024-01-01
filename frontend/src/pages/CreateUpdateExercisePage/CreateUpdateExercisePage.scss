@@ -23,6 +23,14 @@
     }
 }
 
+.createExercisePage__deleteButton {
+    .button-normal{
+        width: 315px;
+    }
+    
+    margin-top: 10px;
+}
+
 .createExercisePage {
     display: flex;
     flex-direction: column;

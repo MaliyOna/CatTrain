@@ -60,6 +60,15 @@
     width: 15%;
 }
 
+.createCoursePage__buttonCreate {
+    display: flex;
+    flex-direction: column;
+}
+
+.createCoursePage__buttonCreate__delete {
+    margin-top: 5px;
+}
+
 .createCoursePage__title__input {
     width: 45%;
 }

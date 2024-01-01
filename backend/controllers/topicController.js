@@ -1,7 +1,9 @@
 const Code = require('../models/Code');
+const Course = require('../models/Course');
 const Example = require('../models/Example');
 const Exercise = require('../models/Exercise');
 const Topic = require('../models/Topic');
+const UserTopics = require('../models/UserTopics');
 
 class topicController {
     async getTopicById(req, res) {
@@ -13,6 +15,26 @@ class topicController {
                 .populate('exercises');
             res.json(topic);
 
+        } catch (error) {
+            console.log(error);
+            return res.status(400).json({ message: "Topic error" });
+        }
+    }
+
+    async deleteTopic(req, res) {
+        try {
+            const topicId = req.params.topicId;
+
+            await Topic.deleteOne({ _id: topicId });
+
+            await Course.updateMany(
+                { topics: topicId },
+                { $pull: { topics: topicId } }
+            );
+
+            await UserTopics.deleteMany({ topic: topicId });
+
+            return res.status(200).json({ message: "Тема успешно удален" });
         } catch (error) {
             console.log(error);
             return res.status(400).json({ message: "Topic error" });
@@ -104,6 +126,8 @@ class topicController {
 
             topic.exercises.push(exercise);
             await topic.save();
+
+            return res.status(200).json({ message: 'Exercise added to course successfully' });
         } catch (error) {
             console.log(error);
             return res.status(400).json({ message: "Add exercise to topic description error" });

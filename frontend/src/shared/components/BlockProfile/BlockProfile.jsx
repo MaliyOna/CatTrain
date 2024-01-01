@@ -1,4 +1,4 @@
-import Reac from 'react';
+import React from 'react';
 import './BlockProfile.scss';
 import { ButtonWithDocument } from '../ButtonWithDocument/ButtonWithDocument';
 

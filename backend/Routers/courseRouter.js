@@ -20,6 +20,7 @@ router.put('/:courseId/language', controller.updateLanguageById);
 router.post('/:courseId/newtopic', controller.addNewTopic);
 router.post('/:courseId/usercourses', controller.checkOrAddConnectionCourse);
 router.post('/:courseId/topic/:topicId', controller.checkOrAddConnectionTopic);
+router.delete('/:courseId', controller.deleteCourse);
 router.put('/topic/:topicId/exercise/:exerciseId', controller.addExerciseToUserTopic);
 
 module.exports = router;

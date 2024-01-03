@@ -4,7 +4,7 @@ import { PageHead } from '../../shared/components/PageHead/PageHead';
 import { PageContent } from '../../shared/components/PageContent/PageContent';
 import { Menu } from '../../shared/components/Menu/Menu';
 import { Input } from '../../shared/components/Input/Input';
-import { addNewTopicToCourse, deleteCourse, getCourseById, updateCourseDescription, updateCourseLanguage, updateCourseLevel } from '../../shared/api/courseApi';
+import { addNewTopicToCourse, deleteCourse, getCourseById, updateCourseDescription, updateCourseLanguage, updateCourseLevel, updateCourseTitle } from '../../shared/api/courseApi';
 import { useParams } from 'react-router-dom';
 import { convertToRaw, convertFromRaw, EditorState } from 'draft-js';
 import { EditorBlock } from '../../shared/components/EditorBlock/EditorBlock';
@@ -136,6 +136,11 @@ export function CreateUpdateCoursePage() {
         navigate(`/factorycourses`);
     }
 
+    async function changeCourseTitle(value) {
+        setTitle(value);
+        await updateCourseTitle(params.courseId, value);
+    }
+
     return (
         <>
             <PageHead></PageHead>
@@ -149,7 +154,7 @@ export function CreateUpdateCoursePage() {
                                 type="text"
                                 border="border"
                                 value={title}
-                                onChange={(event) => setTitle(event.target.value)}
+                                onChange={(event) => changeCourseTitle(event.target.value)}
                                 name="newLogin"
                                 rules={{ required: "Required field" }} />
                         </div>
@@ -183,7 +188,7 @@ export function CreateUpdateCoursePage() {
                         </div>
 
                         <div className='createCoursePage__buttonCreate__delete'>
-                            <Button onClick={() => deleteTopicClick()} value='Удалить тему' color='red' />
+                            <Button onClick={() => deleteTopicClick()} value='Удалить курс' color='red' />
                         </div>
                     </div>
 

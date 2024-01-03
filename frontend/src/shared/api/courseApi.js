@@ -18,6 +18,10 @@ export async function updateCourseDescription(courseId, description) {
     await api.put(`/courses/${courseId}/description`, {description: description})
 }
 
+export async function updateCourseTitle(courseId, title) {
+    await api.put(`/courses/${courseId}/title`, {title: title})
+}
+
 export async function updateCourseLevel(courseId, level) {
     await api.put(`/courses/${courseId}/level`, {level: level})
 }

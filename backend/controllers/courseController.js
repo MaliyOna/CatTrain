@@ -2,9 +2,7 @@ const Course = require('../models/Course');
 const Topic = require('../models/Topic');
 const { validationResult } = require('express-validator');
 const User = require('../models/User');
-const { Types } = require('mongoose');
 const UserTopics = require('../models/UserTopics');
-const Exercise = require('../models/Exercise');
 
 class courseController {
     async createCourse(req, res) {
@@ -214,6 +212,19 @@ class courseController {
         } catch (error) {
             console.log(error);
             return res.status(400).json({ message: "Add exercise to userTopic error" });
+        }
+    }
+    
+    async updateCourseTitle(req, res) {
+        try {
+            const courseId = req.params.courseId;
+            const title = req.body.title;
+
+            await Course.findByIdAndUpdate({ _id: courseId }, { title: title })
+            return res.status(200).json({ message: "" })
+        } catch (error) {
+            console.log(error);
+            return res.status(400).json({ message: "Update topic title error" });
         }
     }
 }

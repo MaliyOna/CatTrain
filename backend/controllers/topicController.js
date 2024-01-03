@@ -47,6 +47,7 @@ class topicController {
             const title = req.body.title;
 
             await Topic.findByIdAndUpdate({ _id: topicId }, { title: title })
+            return res.status(200).json({ message: "" })
         } catch (error) {
             console.log(error);
             return res.status(400).json({ message: "Update topic title error" });
@@ -59,6 +60,7 @@ class topicController {
             const description = req.body.description;
 
             await Topic.findByIdAndUpdate({_id: topicId}, {description: description});
+            return res.status(200).json({ message: "" })
         } catch (error) {
             console.log(error);
             return res.status(400).json({ message: "Update topic description error" });

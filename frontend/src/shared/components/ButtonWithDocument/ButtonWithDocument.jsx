@@ -2,9 +2,7 @@ import React from 'react';
 import './ButtonWithDocument.scss';
 import { Button } from '../Button/Button';
 import jsPDF from 'jspdf';
-// import translate from 'google-translate-api';
 
-// Загружаем шрифт
 import Arial from '../../fonts/Arial/arialmt.ttf';
 
 export function ButtonWithDocument(props) {

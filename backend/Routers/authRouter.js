@@ -13,7 +13,7 @@ router.post('/registration',
 ], controller.registration);
 
 router.post('/login', controller.login);
-router.put('/', controller.changeRole);
-router.get('/:userName', controller.getRole);
+router.put('/', authMiddleware, controller.changeRole);
+router.get('/:userName', authMiddleware, controller.getRole);
 
 module.exports = router;
